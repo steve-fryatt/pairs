@@ -6,7 +6,7 @@ REM
 REM Version 0.32
 REM 25 March 2003
 :
-LIBRARY "BASIC:WimpLib2"
+LIBRARY "BASIC:WimpLib"
 LIBRARY "BASIC:WimpSprite"
 LIBRARY "BASIC:WimpError"
 LIBRARY "BASIC:Config"
