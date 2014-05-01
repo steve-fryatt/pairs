@@ -1,0 +1,14 @@
+| !Run for Pairs
+|
+| (c) Stephen Fryatt, 1997
+| 0.31 (17 March 2003)
+
+Set Pairs$Dir <Obey$Dir>
+Set Pairs$Path <Pairs$Dir>.
+
+IconSprites <Pairs$Dir>.!Sprites
+
+If "<PlayIt$Path>" <> "" Then Run PlayIt:Ensure -e 1.59
+
+WimpSlot -min 128K -max 128K
+Run <Pairs$Dir>.!RunImage

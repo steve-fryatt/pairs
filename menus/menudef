@@ -1,0 +1,26 @@
+/* Menus for Pairs
+ *
+ * (c) Stephen Fryatt, 1997
+ * 0.10 (21 April 2002)
+ */
+
+menu (icon_bar_menu, "Pairs")
+{
+  item ("Info...")
+  {
+    d_box(info_window);
+    dotted;
+  }
+  item ("Statistics...");
+  item ("Choices...")
+  {
+    dotted;
+  }
+  item ("Quit");
+}
+
+menu (main_window_menu, "Pairs")
+{
+  item ("New game");
+}
+
