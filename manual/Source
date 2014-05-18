@@ -6,7 +6,7 @@
 =============================================================================
 Pairs - Desktop Memory Game                                      Version $$version$$
 
-(c) Stephen Fryatt, 1997                       $$date$$
+(c) Stephen Fryatt, 1997-2014                  $$date$$
 =============================================================================
 </literal>
 
@@ -14,13 +14,15 @@ Pairs - Desktop Memory Game                                      Version $$versi
 
 <chapter title="License" file="License">
 
-<cite>Pairs</cite> is <strong>freeware</strong>.  Copyright is held by the author, Stephen Fryatt, 1997.
+<cite>Pairs</cite> is licensed under the EUPL, Version&nbsp;1.1 only (the &ldquo;Licence&rdquo;); you may not use this work except in compliance with the Licence.
 
-<cite>Pairs</cite> may be copied freely, so long as it remains unaltered with all its files and documentation intact.  Before copying <cite>Pairs</cite>, ensure that the <file>!Pairs.Choices</file> file is deleted from inside the <file>!Pairs</file> application directory (if it exists) so the default configuration is used.
+You may obtain a copy of the Licence at <link ref="#url http://joinup.ec.europa.eu/software/page/eupl">http://joinup.ec.europa.eu/software/page/eupl</link>
 
-If you wish to distribute <cite>Pairs</cite>, please contact me to get my permission.  This is so that I can ensure that you have the latest version available.  <cite>Pairs</cite> may not be sold, although Public Domain libraries may charge for the cost of discs.
+Unless required by applicable law or agreed to in writing, software distributed under the Licence is distributed on an &ldquo;<strong>as is</strong>&rdquo; basis, <strong>without warranties or conditions of any kind</strong>, either express or implied.
 
-No guarantee is made as to the suitability or stability of <cite>Pairs</cite> for any particular purpose.  No liability can be accepted by the author for any loss or damage caused by the use of <cite>Pairs</cite>.
+See the Licence for the specific language governing permissions and limitations under the Licence.
+
+The source for <cite>Pairs</cite> can be found alongside this binary download, at <link ref="#url http://www.stevefryatt.org.uk/software">http://www.stevefryatt.org.uk/software</link>
 
 </chapter>
 
@@ -29,7 +31,7 @@ No guarantee is made as to the suitability or stability of <cite>Pairs</cite> fo
 
 <chapter title="Credits" file="Credits">
 
-<cite>Pairs</cite> uses <cite>PlayIt</cite> by Rick Hudson to play sound samples.  This is Freeware and can be obtained from either of Rick's websites at <link ref="#url">http://homepages.paradise.net.nz/rhudson/software/playit.html</link> and <link ref="#url">http://www.kpo.org.nz/ricksoft/playit.html</link>.
+<cite>Pairs</cite> uses <cite>PlayIt</cite> by Rick Hudson to play sound samples. This is Freeware and can be obtained from either of Rick&rsquo;s websites at <link ref="#url">http://homepages.paradise.net.nz/rhudson/software/playit.html</link> and <link ref="#url">http://www.kpo.org.nz/ricksoft/playit.html</link>.
 
 </chapter>
 
@@ -38,7 +40,7 @@ No guarantee is made as to the suitability or stability of <cite>Pairs</cite> fo
 
 <chapter title="Introduction" file="Introduction">
 
-<cite>Pairs</cite> is a Desktop memory game.  The playing area is covered in pairs of picture cards, placed face down.  Each player takes it in turns to flip over two cards and look at the pictures.  If they match, the cards are removed and the player gets another turn; the winner is the player to have removed the most pairs of cards at the end of the game.
+<cite>Pairs</cite> is a Desktop memory game. The playing area is covered in pairs of picture cards, placed face down. Each player takes it in turns to flip over two cards and look at the pictures. If they match, the cards are removed and the player gets another turn; the winner is the player to have removed the most pairs of cards at the end of the game.
 
 Interactive help is fully supported.
 
@@ -49,21 +51,21 @@ Interactive help is fully supported.
 
 <chapter title="Installing Pairs" file="Install">
 
-<cite>Pairs</cite> requires RISC OS 3.1 or later and has been tested on RISC OS Select (RISC OS 4.33).  It is 32 bit compliant and compatible with RISC OS 5 on the Iyonix.
+<cite>Pairs</cite> requires RISC&nbsp;OS&nbsp;3.1 or later and has been tested on RISC&nbsp;OS Select (RISC&nbsp;OS&nbsp;4.33). It is 32-bit compliant and compatible with RISC&nbsp;OS&nbsp;5 on the Iyonix and its successors.
 
-<cite>Pairs</cite> can be run off a hard disc or floppy disc.  To install it on a hard disc, copy the <file>!Pairs</file> application to a suitable place on your disc.  If sound samples are used, use from a floppy disc may be impractical due to space limitations.
+<cite>Pairs</cite> can be run off a hard disc or floppy disc. To install it on a hard disc, copy the <file>!Pairs</file> application to a suitable place on your disc. If sound samples are used, use from a floppy disc may be impractical due to space limitations.
 
-<cite>Pairs</cite> uses Rick Hudson's <cite>PlayIt</cite> to handle sound samples.  The latest version of this is can be obtained from his websites at <link ref="#url">http://homepages.paradise.net.nz/rhudson/software/playit.html</link> or <link ref="#url">http://www.kpo.org.nz/ricksoft/playit.html</link>.  Versions from 1.68 onwards are 32-bit clean.  <cite>Pairs</cite> requires version 1.59 or later.
+<cite>Pairs</cite> uses Rick Hudson&rsquo;s <cite>PlayIt</cite> to handle sound samples. The latest version of this is can be obtained from his websites at <link ref="#url">http://homepages.paradise.net.nz/rhudson/software/playit.html</link> or <link ref="#url">http://www.kpo.org.nz/ricksoft/playit.html</link>. Versions from 1.68 onwards are 32-bit clean. <cite>Pairs</cite> requires version 1.59 or later.
 
-The <file>!PlayIt</file> application should be copied into <file>!Boot.Resources</file>, so that it can be found by any applications that need it.  Full documentation is supplied in the <cite>PlayIt</cite> archive.  If you do not wish to use sound, installing <cite>PlayIt</cite> is not necessary.
+The <file>!PlayIt</file> application should be copied into <file>!Boot.Resources</file>, so that it can be found by any applications that need it. Full documentation is supplied in the <cite>PlayIt</cite> archive. If you do not wish to use sound, installing <cite>PlayIt</cite> is not necessary.
 
 <subhead title="Upgrading from version 0.20 or earlier">
 
-If you are upgrading <cite>Pairs</cite> from version 0.20 or earlier, you will need to update the structure of the <file>!Pairs.Cards</file> directory.  Card sets are now stored in their own sub-directories, to allow for the storage of sound samples.
+If you are upgrading <cite>Pairs</cite> from version 0.20 or earlier, you will need to update the structure of the <file>!Pairs.Cards</file> directory. Card sets are now stored in their own sub-directories, to allow for the storage of sound samples.
 
-Open the <file>Cards</file> directory (<key>shift</key>-double-click on <file>!Pairs</file> to open the application directory).  It will contain sprite files that correspond to the various installed card sets: these will have the names of the card sets, with optional "22" and "23" suffixes.
+Open the <file>Cards</file> directory (<key>shift</key>-double-click on <file>!Pairs</file> to open the application directory). It will contain sprite files that correspond to the various installed card sets: these will have the names of the card sets, with optional &ldquo;22&rdquo; and &ldquo;23&rdquo; suffixes.
 
-For each set of card sprites in turn, rename the file with <em>no</em> suffix (for example, <file>Pictures</file>) as <file>Sprites</file>.  Then create a directory with the original name inside <file>!Pairs.Cards</file> and move the renamed sprite file into it.  If there are files with the same name and either "22" or "23" suffixes, rename them as <file>Sprites22</file> and <file>Sprites23</file> respectively and move them into the directory too (it is very unlikely that there will be any "23" files present).  Repeat this process until there are no sprite files in the root <file>!Pairs.Cards</file> directory.
+For each set of card sprites in turn, rename the file with <em>no</em> suffix (for example, <file>Pictures</file>) as <file>Sprites</file>. Then create a directory with the original name inside <file>!Pairs.Cards</file> and move the renamed sprite file into it. If there are files with the same name and either &ldquo;22&rdquo; or &ldquo;23&rdquo; suffixes, rename them as <file>Sprites22</file> and <file>Sprites23</file> respectively and move them into the directory too (it is very unlikely that there will be any &ldquo;23&rdquo; files present). Repeat this process until there are no sprite files in the root <file>!Pairs.Cards</file> directory.
 
 </chapter>
 
@@ -72,22 +74,22 @@ For each set of card sprites in turn, rename the file with <em>no</em> suffix (f
 
 <chapter title="Using Pairs" file="Use">
 
-Put <cite>Pairs</cite> on to the icon bar by double-clicking on the <file>!Pairs</file> application in a Filer window.  To start a new game using the default options, click <mouse>select</mouse> on its icon bar icon to open the playing window.
+Put <cite>Pairs</cite> on to the iconbar by double-clicking on the <file>!Pairs</file> application in a Filer window. To start a new game using the default options, click <mouse>select</mouse> on its iconbar icon to open the playing window.
 
-The human player moves first against the computer, so click <mouse>select</mouse> on any two of the cards to turn them over.  Look at the pictures and try to remember what they are.  After a short pause the cards are flipped back again and the computer will turn over two cards of its own; again, watch what the cards are and try to remember them.
+The human player moves first against the computer, so click <mouse>select</mouse> on any two of the cards to turn them over. Look at the pictures and try to remember what they are. After a short pause the cards are flipped back again and the computer will turn over two cards of its own; again, watch what the cards are and try to remember them.
 
-If either player turns over a pair of cards, the cards are removed from play and that player gets another turn.  At the end of the game, the winner is the one to find the most pairs.
+If either player turns over a pair of cards, the cards are removed from play and that player gets another turn. At the end of the game, the winner is the one to find the most pairs.
 
-The current scores are shown at the top of the playing window, alongside the players' names.  To change the name of the human player, click over the name and enter a new one in the field that appears.  Press <key>return</key> to change the name or <key>escape</key> to cancel.  Editing the name of the computer player can be enabled from the <link ref="Options">Choices Window</link>, or editing the human player's name can be disabled.
+The current scores are shown at the top of the playing window, alongside the players&rsquo; names. To change the name of the human player, click over the name and enter a new one in the field that appears. Press <key>return</key> to change the name or <key>escape</key> to cancel. Editing the name of the computer player can be enabled from the <link ref="Options">Choices Window</link>, or editing the human player&rsquo;s name can be disabled.
 
 To start a new game, click <mouse>menu</mouse> over the game board and select <menu>New game</menu>.
 
 
 <subhead title="Game Statistics">
 
-A few more statistics are available, to indicate how the current game is progressing.  Select <menu>Statistics...</menu> from the icon bar menu to open the <window>Game Statistics</window> window.
+A few more statistics are available, to indicate how the current game is progressing. Select <menu>Statistics...</menu> from the icon bar menu to open the <window>Game Statistics</window> window.
 
-This window contains the game scores for each player, as shown in the playing window.  It also contains the largest number of attempts taken to turn over a pair of cards, as well as the average number of attempts.  Finally, the total number of turns taken is shown.
+This window contains the game scores for each player, as shown in the playing window. It also contains the largest number of attempts taken to turn over a pair of cards, as well as the average number of attempts. Finally, the total number of turns taken is shown.
 
 </chapter>
 
@@ -96,17 +98,17 @@ This window contains the game scores for each player, as shown in the playing wi
 
 <chapter title="Game Options" file="Options">
 
-The various game options can be set from the <window>Choices Window</window>, by choosing <menu>Choices...</menu> from the icon bar menu.  The options set here will take effect in the next new game to be started and do not affect any game that is currently in progress.
+The various game options can be set from the <window>Choices Window</window>, by choosing <menu>Choices...</menu> from the icon bar menu. The options set here will take effect in the next new game to be started and do not affect any game that is currently in progress.
 
-The <icon>Players</icon> section allows details of the two players to be set.  The names of the human and computer players can be entered here; if the <icon>Editable</icon> option is on, they can then be changed from the game window as described above.
+The <icon>Players</icon> section allows details of the two players to be set. The names of the human and computer players can be entered here; if the <icon>Editable</icon> option is on, they can then be changed from the game window as described above.
 
-The <icon>Forgetfulness</icon> option for the computer player sets its playing level.  In each round it will forget a certain percentage of what it knows: the higher the percentage, the weaker it plays.  At 100% its game play is totally random, at 0% it will never forget any cards it sees.  It can be surprising how high this must be set for the human player to have any chance of winning...
+The <icon>Forgetfulness</icon> option for the computer player sets its playing level. In each round it will forget a certain percentage of what it knows: the higher the percentage, the weaker it plays. At 100% its game play is totally random, at 0% it will never forget any cards it sees. It can be surprising how high this must be set for the human player to have any chance of winning...
 
-<icon>Board</icon> allows the playing board to be set up.  The <icon>Card set</icon> menu selects the card sprites to be used.  The rows and columns (and hence the total number of cards) is set by the <icon>Size</icon> fields.  Use the bump icons to change the values, but note that if one dimension is an odd number, the other can only be set to even numbers to ensure an even number of cards (and hence a full set of pairs).  Finally, <icon>Different cards</icon> sets the number of different images used.
+<icon>Board</icon> allows the playing board to be set up. The <icon>Card set</icon> menu selects the card sprites to be used. The rows and columns (and hence the total number of cards) is set by the <icon>Size</icon> fields. Use the bump icons to change the values, but note that if one dimension is an odd number, the other can only be set to even numbers to ensure an even number of cards (and hence a full set of pairs). Finally, <icon>Different cards</icon> sets the number of different images used.
 
-The <icon>Play</icon> section allows the length of time the cards are turned over for to be adjusted.  The value shown is in half-seconds.  If a suitable version of <cite>PlayIt</cite> is installed and has been seen, selecting the <icon>Use sounds</icon> option will cause the card sounds to be played if available.
+The <icon>Play</icon> section allows the length of time the cards are turned over for to be adjusted. The value shown is in half-seconds. If a suitable version of <cite>PlayIt</cite> is installed and has been seen, selecting the <icon>Use sounds</icon> option will cause the card sounds to be played if available.
 
-Click <mouse>select</mouse> on <icon>Apply</icon> to use the changes or on <icon>Cancel</icon> to forget them.  <icon>Save</icon> will use the changes and save them so that they will be used in future too.  Clicking with <mouse>adjust</mouse> will leave the window open; with <icon>Cancel</icon> this resets the values in the window to the state they were in when it was opened.
+Click <mouse>select</mouse> on <icon>Apply</icon> to use the changes or on <icon>Cancel</icon> to forget them. <icon>Save</icon> will use the changes and save them so that they will be used in future too. Clicking with <mouse>adjust</mouse> will leave the window open; with <icon>Cancel</icon> this resets the values in the window to the state they were in when it was opened.
 
 </chapter>
 
@@ -115,22 +117,22 @@ Click <mouse>select</mouse> on <icon>Apply</icon> to use the changes or on <icon
 
 <chapter title="Designing New Card Sets" file="Cards">
 
-To add to the selection of cards available, <key>shift</key>-double-click on <file>!Pairs</file> and open the <file>Cards</file> directory.  This holds the sprite files and sounds used for the card sets.  Each set of cards is stored in a separate directory; the name of the directory is used to identify the cards within the application.
+To add to the selection of cards available, <key>shift</key>-double-click on <file>!Pairs</file> and open the <file>Cards</file> directory. This holds the sprite files and sounds used for the card sets. Each set of cards is stored in a separate directory; the name of the directory is used to identify the cards within the application.
 
-The directory for each set contains a sprite file holding the images of the cards, with one sprite per card.  To create different versions of a card set for low and high resolution modes (mode 12 and mode 27), use the standard Wimp sprite name suffixes to differentiate the files.  The low res file should be called <file>Sprites</file> and the high res set <file>Sprites22</file> (if you create a high-res mono set, call it <file>Sprites23</file>).  If  you don't create a set of low-res sprites, don't bother with the number suffix.
+The directory for each set contains a sprite file holding the images of the cards, with one sprite per card. To create different versions of a card set for low and high resolution modes (mode&nbsp;12 and mode&nbsp;27), use the standard Wimp sprite name suffixes to differentiate the files. The low res file should be called <file>Sprites</file> and the high res set <file>Sprites22</file> (if you create a high-res mono set, call it <file>Sprites23</file>). If you don&rsquo;t create a set of low-res sprites, don&rsquo;t bother with the number suffix.
 
-The sprite files should each contain a set of sprites, one for each card, named from "0" to "31" (if fewer images are created, the file will still work, but fewer different cards can be used in the game).  An additional sprite named "null" must also be included, which is used for the backs of the cards.
+The sprite files should each contain a set of sprites, one for each card, named from &ldquo;0&rdquo; to &ldquo;31&rdquo; (if fewer images are created, the file will still work, but fewer different cards can be used in the game). An additional sprite named &ldquo;null&rdquo; must also be included, which is used for the backs of the cards.
 
-The sprites can be any size and colour depth, although bear in mind the practicality of using the cards (particularly on low-res monitors).  The dimensions of the card set, used for laying out the playing grid, are taken from the "null" sprite.  For this reason, all the cards should have the same dimensions as the "null" sprite.
+The sprites can be any size and colour depth, although bear in mind the practicality of using the cards (particularly on low-res monitors). The dimensions of the card set, used for laying out the playing grid, are taken from the &ldquo;null&rdquo; sprite. For this reason, all the cards should have the same dimensions as the &ldquo;null&rdquo; sprite.
 
 To use images derived from other formats (such as JPEGs), use ChangeFSI to convert the images into sprites and then use Paint to merge them into a single sprite file and adjust the image names accordingly.
 
 
 <subhead title="Adding sounds">
 
-To add sounds to the card set, create a directory within the card set directory called <file>Sounds</file>.  This directory should contain a set of sound samples.  Each card gets a file; the names of the files should match the sprite names in the sprites file.
+To add sounds to the card set, create a directory within the card set directory called <file>Sounds</file>. This directory should contain a set of sound samples. Each card gets a file; the names of the files should match the sprite names in the sprites file.
 
-The formats that can be used for the sound samples are anything that <cite>PlayIt</cite> can support.  See the <cite>PlayIt</cite> documentation for more details.
+The formats that can be used for the sound samples are anything that <cite>PlayIt</cite> can support. See the <cite>PlayIt</cite> documentation for more details.
 
 If you design any new sets of cards that you think others could make use of, I would be happy to include them in the <cite>Pairs</cite> distribution.
 
@@ -155,9 +157,9 @@ Limited distribution Beta release.
 <list>
 <li>Merged scores window into main game window.
 <li>Support for varied sprite sizes and different size files added.
-<li>Options system re-written so changes to configuration are only used when creating new games.  Save options facility added.
+<li>Options system re-written so changes to configuration are only used when creating new games. Save options facility added.
 <li>Resources internationalised and MessageTrans used for all text.
-<li>Players' names are now configurable and editable.
+<li>Players&rsquo; names are now configurable and editable.
 <li>Variable sized boards are now possible.
 <li>Any number of different images (up to half the total cards in play) are now allowed, with the number of cards of each type being varied as required.
 <li>Help text now accessible from the icon bar menu.
@@ -170,14 +172,14 @@ Limited distribution Beta release.
 Public Beta release.
 
 <list>
-<li>Fixed bug causing card menu to be widthed wrongly under RISC OS 3.1.
+<li>Fixed bug causing card menu to be widthed wrongly under RISC&nbsp;OS&nbsp;3.1.
 <li>Card set list handling improved, so that available sets are read each time the <window>Options Window</window> is opened.
-<li>When setting the options, the number of different cards in play is limited to the number of different cards in the currently chosen pack.  The selected pack is ticked in the card menu.
+<li>When setting the options, the number of different cards in play is limited to the number of different cards in the currently chosen pack. The selected pack is ticked in the card menu.
 <li>Error trapping of sprite file handling improved.
 <li>Adjusts relative width of name icons in main window to try and keep both names visible, if possible.
 <li>Sprite masks are now plotted for the playing cards.
 <li>Bug fixed which caused lockup when computer player picked random cards from certain remaining sets.
-<li>Card forget routine moved to before the computer's turn, so that 100% really means 100% and the human's two cards are not remembered.
+<li>Card forget routine moved to before the computer&rsquo;s turn, so that 100% really means 100% and the human&rsquo;s two cards are not remembered.
 </list>
 
 <subhead title="0.30 (12 March 2003)">
@@ -193,13 +195,19 @@ Limited distribution release.
 
 <list>
 <li>Method of loading <cite>PlayIt</cite> improved to prevent screen refresh.
-<li>Waits for human's second card sound to finish before turning the cards back over.
+<li>Waits for human&rsquo;s second card sound to finish before turning the cards back over.
 </list>
 
 <subhead title="0.32 (2 April 2003)">
 
 <list>
 <li>Problems with sound events across games and after game window was closed have been fixed.
+</list>
+
+<subhead title="Test Build">
+
+<list>
+<li>Build system revised and license updated to EUPL.
 </list>
 
 
