@@ -1,0 +1,71 @@
+# Messages for Pairs
+#
+# (C) Stephen Fryatt, 2002
+#
+# UK Version
+
+TaskName:Pairs
+Version:0.32 (2 April 2003)
+
+TaskSpr:!pairs
+
+CardMenu:Card sets
+
+# Item labels
+
+Human:Human
+Computer:Computer
+
+# Error messages
+
+NoSprRoom:There is not enough free memory or application space to load the selected card sprites.
+NoSprs:There are no card sprites available: please install some before running Pairs.
+SprsNotFound:The chosen card sprites were not found: an alternative is being substituted.
+KillGame:There is a game in progress.  Do you really want to start a new game?
+BadBoard:The cards have not been dealt evenly, so this game is unplayable. Please report this error to the author, with details of all the current choices. Try starting a new game.
+
+# Interactive help text
+
+HelpH1:\TPairs game.|M\Sstart a new game or bring the current game window to the front.
+HelpH2:This \w displays information about Pairs.
+
+HelpMW0:\Tcurrent Pairs game.|M\Sturn cards over.
+HelpMW1/HelpMW2:\Tcurrent score.
+HelpMW3/HelpMW4:\Tcurrent score.|M\Sedit the player's name, if editing is enabled in the options.
+
+HelpCW0:\Sclose the choices \w and forget any changes made.|M\Aforget the changes made since the window was opened.
+HelpCW1:\Sclose the choices \w, using the changes and saving them to disc.|M\Ause the changes and save them.
+HelpCW2:\Sclose the choices \w and use the changes|M\Ause the changes.
+HelpCW3:Enter the name of the human player.|MIf editable is ticked, the name can be changed from the game \w.
+HelpCW4:\Stoggle whether the name of the human player can be changed from the game \w.
+HelpCW5:Enter the name of the computer player.|MIf editable is ticked, the name can be changed from the game \w.
+HelpCW6:\Stoggle whether the name of the computer player can be changed from the game \w.
+HelpCW7:Enter the forgetfulness of the computer player.|M\Tpercentage of cards it has seen that it will forget each turn.|MThe higher the value, the weaker the playing.
+HelpCW8/HelpCW9/HelpCW10:Drag the bar to set the forgetfulness of the computer player.|M\Tpercentage of cards it has seen that it will forget each turn.|MThe higher the value, the weaker the playing.
+HelpCW11:\Tset of playing cards to be used.
+HelpCW12:\Schoose the set of playing cards to be used.
+HelpCW13:\Tthe number of columns of cards on the playing area.
+HelpCW14:\Sdecrease the number of columns of cards. \Aincrease the number.|MIf the number of rows is odd, only even numbers can be chosen.
+HelpCW15:\Sincrease the number of columns of cards. \Adecrease the number.|MIf the number of rows is odd, only even numbers can be chosen.
+HelpCW16:\Tthe number of rows of cards on the playing area.
+HelpCW17:\Sdecrease the number of rows of cards. \Aincrease the number.|MIf the number of columns is odd, only even numbers can be chosen.
+HelpCW18:\Sincrease the number of rows of cards. \Adecrease the number.|MIf the number of columns is odd, only even numbers can be chosen.
+HelpCW19:\Tthe number of different cards used in the game.|MIt can not be more than half the total number of cards used.
+HelpCW20:\Sdecrease the number of cards used. \Aincrease the number.
+HelpCW21:\Sincrease the number of cards used. \Adecrease the number.
+HelpCW22:\Tthe time that cards are displayed for, before being turned over again.|MThe time is in half-seconds.
+HelpCW23:\Sdecrease the time that cards are displayed for. \Aincrease the time.
+HelpCW24:\Sincrease the time that cards are displayed for. \Adecrease the time.
+HelpCW25:\Stoggle if sounds are used as cards are turned over.
+
+HelpST0:\Tcurrent score for each player.
+HelpST1:\Taverage number of attempts each player has made per matching pair of cards.
+HelpST2:\Tgreatest number of attempts each player has made before turning over a matching pair of cards.
+HelpST3:\Ttotal number of turns taken since the start of the game.
+
+MenuMM0:\Sstart a new game.
+
+MenuIB0:\Rsee information about Pairs.|M\Sread the online help.
+MenuIB1:\Ssee statistics about the current game.
+MenuIB2:\Schange the Pairs game options.
+MenuIB3:\Squit Pairs.
