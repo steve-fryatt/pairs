@@ -31,7 +31,7 @@ The source for <cite>Pairs</cite> can be found alongside this binary download, a
 
 <chapter title="Credits" file="Credits">
 
-<cite>Pairs</cite> uses <cite>PlayIt</cite> by Rick Hudson to play sound samples. This is Freeware and can be obtained from either of Rick&rsquo;s websites at <link ref="#url">http://homepages.paradise.net.nz/rhudson/software/playit.html</link> and <link ref="#url">http://www.kpo.org.nz/ricksoft/playit.html</link>.
+<cite>Pairs</cite> uses <cite>PlayIt</cite>, originally by Rick Hudson and now maintained by Chris Martin, to play sound samples. This is Freeware and can be obtained from Chris Martin&rsquo;s website at <link ref="#url">http://www.users.on.net/~belles/software/playit/</link>.
 
 </chapter>
 
@@ -55,7 +55,7 @@ Interactive help is fully supported.
 
 <cite>Pairs</cite> can be run off a hard disc or floppy disc. To install it on a hard disc, copy the <file>!Pairs</file> application to a suitable place on your disc. If sound samples are used, use from a floppy disc may be impractical due to space limitations.
 
-<cite>Pairs</cite> uses Rick Hudson&rsquo;s <cite>PlayIt</cite> to handle sound samples. The latest version of this is can be obtained from his websites at <link ref="#url">http://homepages.paradise.net.nz/rhudson/software/playit.html</link> or <link ref="#url">http://www.kpo.org.nz/ricksoft/playit.html</link>. Versions from 1.68 onwards are 32-bit clean. <cite>Pairs</cite> requires version 1.59 or later.
+<cite>Pairs</cite> uses Rick Hudson&rsquo;s <cite>PlayIt</cite> &ndash; now maintained by Chris Martin &ndash; to handle sound samples. The latest version of this is can be obtained from Chris&rsquo;s website at <link ref="#url">http://www.users.on.net/~belles/software/playit/</link>. Versions from 1.68 onwards are 32-bit clean. <cite>Pairs</cite> requires version 1.59 or later.
 
 The <file>!PlayIt</file> application should be copied into <file>!Boot.Resources</file>, so that it can be found by any applications that need it. Full documentation is supplied in the <cite>PlayIt</cite> archive. If you do not wish to use sound, installing <cite>PlayIt</cite> is not necessary.
 
