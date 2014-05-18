@@ -32,6 +32,11 @@ LIBRARY "BASIC:Window"
 LIBRARY "BASIC:Icon"
 LIBRARY "BASIC:String"
 :
+REM These values get replaced by tokenize.
+:
+build_version$ = "1.10"
+build_date$ = "01 Jul 2009"
+:
 PROCwimp_error_initialise("Pairs","!Pairs")
 ON ERROR dummy%=FNwimp_error : END
 :
@@ -568,7 +573,9 @@ PROCcopy_icon_definition(b%,16,options_icon%+4)
 SYS "Wimp_CreateWindow",,b% TO options_window%
 !options_icon%=options_window%
 PROCclose_templates
-$FNicon_indirection(info_window%,6)=FNmessage_trans("Version")
+:
+$FNicon_indirection(info_window%,4)=CHR$(169) + " Stephen Fryatt, 1997-" + MID$(build_date$, 8)
+$FNicon_indirection(info_window%,6)=build_version$+" ("+build_date$+")"
 :
 name_edit_icon%=-1
 DIM name_edit_validation$(1)
