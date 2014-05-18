@@ -15,9 +15,9 @@ resource_path$=resource_dir$+"."+FNterritory_name
 SYS "XOS_File",5,resource_path$ TO type%
 IF type%<2 OR type%>3 THEN resource_path$=resource_dir$+".UK." ELSE resource_path$+="."
 :
-SYS "XOS_SetVarVal","Pairs$HelpText",resource_path$+"Help",LEN(resource_path$+"Help"),0,0
+SYS "XOS_SetVarVal","Pairs$HelpText",resource_path$+"HelpText",LEN(resource_path$+"HelpText"),0,0
 :
-OSCLI("%Filer_Run "+resource_path$+"Help")
+OSCLI("%Filer_Run "+resource_path$+"HelpText")
 :
 END
 
