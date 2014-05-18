@@ -24,8 +24,10 @@
 /* Iconbar Menu */
 
 menu(icon_bar_menu, "Pairs") {
-	item("Info...") {
+	item("Info") {
 		d_box(info_window);
+	}
+	item("Help") {
 		dotted;
 	}
 	item("Statistics...");

@@ -236,7 +236,7 @@ REM ----------------------------------------------------------------------------
 :
 DEF PROChandle_mouse_clicks(x%,y%,window%,icon%,buttons%)
 :
-REM Handle the mouse clicks
+REM Handle the mouse click
 :
 LOCAL xo%,yo%,val%,inc%,width%,height%
 :
@@ -245,8 +245,8 @@ IF name_edit_icon%>-1 AND NOT (window%=main_window% AND icon%=name_edit_icon%) T
 CASE window% OF
  WHEN -2
   CASE buttons% OF
-   WHEN 2 : PROCset_menu_state(ibar_menu%,1,FALSE,NOT FNwindow_is_open(main_window%))
-            PROCdisplay_bar_menu(ibar_menu%,4,2,x%)
+   WHEN 2 : PROCset_menu_state(ibar_menu%,2,FALSE,NOT FNwindow_is_open(main_window%))
+            PROCdisplay_bar_menu(ibar_menu%,5,2,x%)
    WHEN 4 : IF FNwindow_is_open(main_window%) THEN
              PROCopen_window(main_window%)
             ELSE
@@ -347,10 +347,10 @@ reopen%=(q%!8=1)
 CASE menu_up% OF
  WHEN ibar_menu%
   CASE s1% OF
-   WHEN 0 : OSCLI("%Filer_Run <Pairs$Dir>.!Help")
-   WHEN 1 : PROCopen_window_centred(stats_window%,!q%,q%!4)
-   WHEN 2 : PROCopen_options_window(!q%,q%!4)
-   WHEN 3 : quit%=TRUE
+   WHEN 1 : OSCLI("%Filer_Run <Pairs$Dir>.!Help")
+   WHEN 2 : PROCopen_window_centred(stats_window%,!q%,q%!4)
+   WHEN 3 : PROCopen_options_window(!q%,q%!4)
+   WHEN 4 : quit%=TRUE
   ENDCASE
  WHEN main_menu%
   CASE s1% OF
