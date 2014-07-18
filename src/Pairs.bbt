@@ -25,12 +25,13 @@ REM permissions and limitations under the Licence.
 REM Play card matching games
 :
 LIBRARY "BASIC:WimpLib"
-LIBRARY "BASIC:WimpSprite"
-LIBRARY "BASIC:WimpError"
 LIBRARY "BASIC:Config"
-LIBRARY "BASIC:Window"
 LIBRARY "BASIC:Icon"
+LIBRARY "BASIC:Resources"
 LIBRARY "BASIC:String"
+LIBRARY "BASIC:Window"
+LIBRARY "BASIC:WimpError"
+LIBRARY "BASIC:WimpSprite"
 :
 REM These values get replaced by tokenize.
 :
@@ -499,7 +500,7 @@ poll_mask%=&1831
 quit%=FALSE
 dragging_options_bar%=FALSE
 :
-resource_path$=FNterritory_resources("<Pairs$Dir>.Resources")
+resource_path$=FNresources_find_territory_folder("<Pairs$Dir>.Resources")
 :
 DIM message_block% 16
 SYS "MessageTrans_FileInfo",,resource_path$+"Messages" TO flags%,,message_size%
