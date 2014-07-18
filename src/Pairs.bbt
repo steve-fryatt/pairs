@@ -359,8 +359,8 @@ CASE menu_up% OF
             ELSE
              new_game%=1
             ENDIF
-            IF new_game%=1 THEN PROCstart_new_game : PROCforce_window_redraw(main_window%)
-   WHEN 1 : reveal%=NOT reveal% : PROCforce_window_redraw(main_window%)
+            IF new_game%=1 THEN PROCstart_new_game : PROCwindow_force_redraw(main_window%)
+   WHEN 1 : reveal%=NOT reveal% : PROCwindow_force_redraw(main_window%)
   ENDCASE
  WHEN card_menu%
   option_card_set%=s1%
