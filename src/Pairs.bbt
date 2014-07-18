@@ -77,7 +77,7 @@ CASE reason% OF
  WHEN 3     : SYS "Wimp_CloseWindow",,b%
               IF !b%=main_window% THEN
                PROCcancel_null_polls
-               IF FNwindow_is_open(stats_window%) THEN PROCclose_window(stats_window%)
+               IF FNwindow_is_open(stats_window%) THEN PROCwindow_close(stats_window%)
               ENDIF
  WHEN 6     : PROChandle_mouse_clicks(!b%,b%!4,b%!12,b%!16,b%!8)
  WHEN 7     : dragging_options_bar%=FALSE : poll_mask%=old_poll_mask%
@@ -248,7 +248,7 @@ CASE window% OF
    WHEN 2 : PROCset_menu_state(ibar_menu%,2,FALSE,NOT FNwindow_is_open(main_window%))
             PROCdisplay_bar_menu(ibar_menu%,5,2,x%)
    WHEN 4 : IF FNwindow_is_open(main_window%) THEN
-             PROCopen_window(main_window%)
+             PROCwindow_open(main_window%)
             ELSE
              PROCstart_new_game
              !q%=main_window%
@@ -282,10 +282,10 @@ CASE window% OF
   CASE icon% OF
    WHEN 0 : CASE buttons% OF
               WHEN 1 : PROCopen_options_window(0,0)
-              WHEN 4 : PROCclose_window(options_window%)
+              WHEN 4 : PROCwindow_close(options_window%)
              ENDCASE
-   WHEN 1 : PROCset_options_details(TRUE) : IF buttons%=4 THEN PROCclose_window(options_window%)
-   WHEN 2 : PROCset_options_details(FALSE) : IF buttons%=4 THEN PROCclose_window(options_window%)
+   WHEN 1 : PROCset_options_details(TRUE) : IF buttons%=4 THEN PROCwindow_close(options_window%)
+   WHEN 2 : PROCset_options_details(FALSE) : IF buttons%=4 THEN PROCwindow_close(options_window%)
    WHEN 21 : PROCdisplay_icon_menu(card_menu%,options_window%,21)
    WHEN 24,25 : val%=VAL($FNicon_indirection(options_window%,23))
                 IF FNodd_number(VAL($FNicon_indirection(options_window%,27))) THEN inc%=2 ELSE inc%=1
@@ -348,7 +348,7 @@ CASE menu_up% OF
  WHEN ibar_menu%
   CASE s1% OF
    WHEN 1 : OSCLI("%Filer_Run <Pairs$Dir>.!Help")
-   WHEN 2 : PROCopen_window_centred(stats_window%,!q%,q%!4)
+   WHEN 2 : PROCwindow_open_centred_at(stats_window%,!q%,q%!4)
    WHEN 3 : PROCopen_options_window(!q%,q%!4)
    WHEN 4 : quit%=TRUE
   ENDCASE
@@ -1356,7 +1356,7 @@ IF FNwindow_is_open(options_window%) THEN
  PROCforce_icon_redraw(options_window%,37)
  IF FNis_caret_in_icon(options_window%,37) THEN PROCput_caret_at_end(choices_window%,37)
 ELSE
- PROCopen_window_centred(options_window%,x%,y%)
+ PROCwindow_open_centred_at(options_window%,x%,y%)
  PROCput_caret_at_end(options_window%,6)
 ENDIF
 ENDPROC
