@@ -1270,8 +1270,8 @@ IF set$<>loaded_card_set$ THEN
  real_set$=set$
  :
  set$+=".Sprites"
- SYS "OS_File",17,path$+"."+set$+FNwimp_sprite_suffix TO type%
- IF type%=1 THEN set$+=FNwimp_sprite_suffix
+ SYS "OS_File",17,path$+"."+set$+FNwimpsprite_file_suffix TO type%
+ IF type%=1 THEN set$+=FNwimpsprite_file_suffix
  :
  SYS "OS_File",17,path$+"."+set$ TO type%,,,,size%
  IF type%<>1 THEN
@@ -1280,8 +1280,8 @@ IF set$<>loaded_card_set$ THEN
   real_set$=set$
   :
   set$+=".Sprites"
-  SYS "OS_File",17,path$+"."+set$+FNwimp_sprite_suffix TO type%
-  IF type%=1 THEN set$+=FNwimp_sprite_suffix
+  SYS "OS_File",17,path$+"."+set$+FNwimpsprite_file_suffix TO type%
+  IF type%=1 THEN set$+=FNwimpsprite_file_suffix
   :
   SYS "OS_File",17,path$+"."+set$ TO type%,,,,size%
  ENDIF
