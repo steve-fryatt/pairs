@@ -38,12 +38,12 @@ REM These values get replaced by tokenize.
 build_version$ = "1.10"
 build_date$ = "01 Jul 2009"
 :
-PROCwimp_error_initialise("Pairs","!Pairs")
-ON ERROR dummy%=FNwimp_error : END
+PROCwimperror_initialise("Pairs","!Pairs")
+ON ERROR dummy%=FNwimperror_program : END
 :
 PROCinitialise
 :
-ON ERROR quit%=(FNwimp_error=2)
+ON ERROR quit% = FNwimperror_program
 :
 WHILE NOT quit%
  PROCpoll(poll_mask%)
@@ -356,7 +356,7 @@ CASE menu_up% OF
  WHEN main_menu%
   CASE s1% OF
    WHEN 0 : IF cards_in_play%>0 THEN
-             new_game%=FNwimp_report(FNmessage_trans("KillGame"),4,%11,"")
+             new_game%=FNwimperror_report(FNmessage_trans("KillGame"),4,%11,"")
             ELSE
              new_game%=1
             ENDIF
@@ -509,7 +509,7 @@ SYS "MessageTrans_OpenFile",message_block%,resource_path$+"Messages",message_buf
 :
 task_name$=FNmessage_trans("TaskName")
 task_sprite$=FNmessage_trans("TaskSpr")
-PROCwimp_error_initialise(task_name$,task_sprite$)
+PROCwimperror_initialise(task_name$,task_sprite$)
 :
 $b%="TASK"
 !q%=&502
@@ -602,7 +602,7 @@ card_sprite_area%=HIMEM
 SYS "Wimp_SlotSize",-1,-1 TO base_wimp_slot%
 
 IF FNmake_card_sprite_list_and_menu(card_sprite_file_path$)=0 THEN
- PROCwimp_report(FNmessage_trans("NoSprs"),2,%10,"")
+ PROCwimperror_report(FNmessage_trans("NoSprs"),2,%10,"")
  quit%=TRUE
  ENDPROC
 ENDIF
@@ -834,7 +834,7 @@ FOR card%=0 TO cards%-1
   board%(x%,y%)=card%
  NEXT copy%
 NEXT card%
-IF error% THEN PROCwimp_report(FNmessage_trans("BadBoard"),2,%01,"")
+IF error% THEN PROCwimperror_report(FNmessage_trans("BadBoard"),2,%01,"")
 ENDPROC
 :
 :
@@ -1275,7 +1275,7 @@ IF set$<>loaded_card_set$ THEN
  :
  SYS "OS_File",17,path$+"."+set$ TO type%,,,,size%
  IF type%<>1 THEN
-  PROCwimp_report(FNmessage_trans("SprsNotFound"),2,%10,"")
+  PROCwimperror_report(FNmessage_trans("SprsNotFound"),2,%10,"")
   set$=card_sprite_files$(0)
   real_set$=set$
   :
@@ -1288,7 +1288,7 @@ IF set$<>loaded_card_set$ THEN
  size%+=4
  :
  SYS "Wimp_SlotSize",base_wimp_slot%+size%,-1 TO new_size%
- IF new_size%<size% THEN PROCwimp_report(FNmessage_trans("NoSprRoom"),2,%10,"") : ENDPROC
+ IF new_size%<size% THEN PROCwimperror_report(FNmessage_trans("NoSprRoom"),2,%10,"") : ENDPROC
  :
  !card_sprite_area%=size%
  card_sprite_area%!8=16
