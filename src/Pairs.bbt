@@ -293,26 +293,26 @@ CASE window% OF
                 IF (icon%=24 AND buttons%=1) OR (icon%=25 AND buttons%=4) THEN val%+=inc% ELSE val%-=inc%
                 IF val%>=4 AND val%<=20 THEN
                  $FNicon_indirection(options_window%,23)=STR$(val%)
-                 PROCforce_icon_redraw(options_window%,23)
+                 PROCicon_redraw(options_window%,23)
                 ENDIF
                 inc%=VAL($FNicon_indirection(options_window%,27))*VAL($FNicon_indirection(options_window%,23))/2
                 val%=VAL($FNicon_indirection(options_window%,31))
                 IF val%>inc% THEN
                  $FNicon_indirection(options_window%,31)=STR$(inc%)
-                 PROCforce_icon_redraw(options_window%,31)
+                 PROCicon_redraw(options_window%,31)
                 ENDIF
    WHEN 28,29 : val%=VAL($FNicon_indirection(options_window%,27))
                 IF FNodd_number(VAL($FNicon_indirection(options_window%,23))) THEN inc%=2 ELSE inc%=1
                 IF (icon%=28 AND buttons%=1) OR (icon%=29 AND buttons%=4) THEN val%+=inc% ELSE val%-=inc%
                 IF val%>=4 AND val%<=20 THEN
                  $FNicon_indirection(options_window%,27)=STR$(val%)
-                 PROCforce_icon_redraw(options_window%,27)
+                 PROCicon_redraw(options_window%,27)
                 ENDIF
                 inc%=VAL($FNicon_indirection(options_window%,27))*VAL($FNicon_indirection(options_window%,23))/2
                 val%=VAL($FNicon_indirection(options_window%,31))
                 IF val%>inc% THEN
                  $FNicon_indirection(options_window%,31)=STR$(inc%)
-                 PROCforce_icon_redraw(options_window%,31)
+                 PROCicon_redraw(options_window%,31)
                 ENDIF
    WHEN 32,33 : val%=VAL($FNicon_indirection(options_window%,31))
                 inc%=VAL($FNicon_indirection(options_window%,27))*VAL($FNicon_indirection(options_window%,23))/2
@@ -320,9 +320,9 @@ CASE window% OF
                 IF (icon%=32 AND buttons%=1) OR (icon%=33 AND buttons%=4) THEN val%+=1 ELSE val%-=1
                 IF val%>=2 AND val%<=inc% THEN
                  $FNicon_indirection(options_window%,31)=STR$(val%)
-                 PROCforce_icon_redraw(options_window%,31)
+                 PROCicon_redraw(options_window%,31)
                 ENDIF
-   WHEN 38,39 : PROCbump_icon(options_window%,37,(icon%=38 AND buttons%=1) OR (icon%=39 AND buttons%=4),1,99,0)
+   WHEN 38,39 : PROCicon_bump_value(options_window%,37,(icon%=38 AND buttons%=1) OR (icon%=39 AND buttons%=4),1,99,0)
   ENDCASE
  IF buttons%=64 THEN PROCstart_drag_bar
 ENDCASE
@@ -366,10 +366,10 @@ CASE menu_up% OF
  WHEN card_menu%
   option_card_set%=s1%
   $FNicon_indirection(options_window%,20)=card_sprite_files$(option_card_set%)
-  PROCforce_icon_redraw(options_window%,20)
+  PROCicon_redraw(options_window%,20)
   IF VAL($FNicon_indirection(options_window%,31))>card_sprites%(option_card_set%) THEN
    $FNicon_indirection(options_window%,31)=STR$(card_sprites%(option_card_set%))
-   PROCforce_icon_redraw(options_window%,31)
+   PROCicon_redraw(options_window%,31)
   ENDIF
   PROCtick_menu_item(card_menu%,option_card_set%)
 ENDCASE
@@ -1119,8 +1119,8 @@ REM Reset the scores and update the window.
 scores%()=0
 $FNicon_indirection(main_window%,0)="0"
 $FNicon_indirection(main_window%,1)="0"
-PROCforce_icon_redraw(main_window%,0)
-PROCforce_icon_redraw(main_window%,1)
+PROCicon_redraw(main_window%,0)
+PROCicon_redraw(main_window%,1)
 :
 turn_count%=0
 turns_for_current_card%()=0
@@ -1133,13 +1133,13 @@ $FNicon_indirection(stats_window%,6)="0"
 $FNicon_indirection(stats_window%,7)="0"
 $FNicon_indirection(stats_window%,8)="0"
 IF FNwindow_is_open(stats_window%) THEN
- PROCforce_icon_redraw(stats_window%,0)
- PROCforce_icon_redraw(stats_window%,1)
- PROCforce_icon_redraw(stats_window%,4)
- PROCforce_icon_redraw(stats_window%,5)
- PROCforce_icon_redraw(stats_window%,6)
- PROCforce_icon_redraw(stats_window%,7)
- PROCforce_icon_redraw(stats_window%,8)
+ PROCicon_redraw(stats_window%,0)
+ PROCicon_redraw(stats_window%,1)
+ PROCicon_redraw(stats_window%,4)
+ PROCicon_redraw(stats_window%,5)
+ PROCicon_redraw(stats_window%,6)
+ PROCicon_redraw(stats_window%,7)
+ PROCicon_redraw(stats_window%,8)
 ENDIF
 ENDPROC
 :
@@ -1157,10 +1157,10 @@ REM Increment and redisplay one of the scores.
 :
 scores%(p%)+=1
 $FNicon_indirection(main_window%,p%)=STR$(scores%(p%))
-PROCforce_icon_redraw(main_window%,p%)
+PROCicon_redraw(main_window%,p%)
 $FNicon_indirection(stats_window%,p%)=STR$(scores%(p%))
 IF FNwindow_is_open(stats_window%) THEN
- PROCforce_icon_redraw(stats_window%,p%)
+ PROCicon_redraw(stats_window%,p%)
 ENDIF
 ENDPROC
 :
@@ -1176,7 +1176,7 @@ DEF PROCupdate_stats(player%,pair%)
 
 IF turns_for_current_card%(player%)>VAL($FNicon_indirection(stats_window%,6+player%)) THEN
  $FNicon_indirection(stats_window%,6+player%)=STR$(turns_for_current_card%(player%))
- IF FNwindow_is_open(stats_window%) THEN PROCforce_icon_redraw(stats_window%,6+player%)
+ IF FNwindow_is_open(stats_window%) THEN PROCicon_redraw(stats_window%,6+player%)
 ENDIF
 IF pair% THEN turns_for_current_card%(player%)=0
 
@@ -1186,14 +1186,14 @@ IF scores%(player%)>0 THEN
 ELSE
  $FNicon_indirection(stats_window%,4+player%)=STR$(total_turns%(player%))
 ENDIF
-IF FNwindow_is_open(stats_window%) THEN PROCforce_icon_redraw(stats_window%,4+player%)
+IF FNwindow_is_open(stats_window%) THEN PROCicon_redraw(stats_window%,4+player%)
 
 REM Only update the turn count if the second player has finished.
 :
 IF player%=1 AND NOT pair% THEN
  turn_count%+=1
  $FNicon_indirection(stats_window%,8)=STR$(turn_count%)
- IF FNwindow_is_open(stats_window%) THEN PROCforce_icon_redraw(stats_window%,8)
+ IF FNwindow_is_open(stats_window%) THEN PROCicon_redraw(stats_window%,8)
 ENDIF
 ENDPROC
 :
@@ -1340,21 +1340,21 @@ FOR loop%=0 TO card_sets%-1
 NEXT loop%
 PROCtick_menu_item(card_menu%,option_card_set%)
 :
-PROCset_icon_selected(options_window%,7,PROCconfig_read_boolean("EditHuman"))
-PROCset_icon_selected(options_window%,10,PROCconfig_read_boolean("EditComputer"))
+PROCicon_set_selected(options_window%,7,PROCconfig_read_boolean("EditHuman"))
+PROCicon_set_selected(options_window%,10,PROCconfig_read_boolean("EditComputer"))
 PROCset_icon_state(options_window%,41,PROCconfig_read_boolean("UseSound"),NOT playit_available%,FALSE)
 :
 IF FNwindow_is_open(options_window%) THEN
- PROCforce_icon_redraw(options_window%,6)
+ PROCicon_redraw(options_window%,6)
  IF FNis_caret_in_icon(options_window%,6) THEN PROCput_caret_at_end(options_window%,6)
- PROCforce_icon_redraw(options_window%,9)
+ PROCicon_redraw(options_window%,9)
  IF FNis_caret_in_icon(options_window%,9) THEN PROCput_caret_at_end(options_window%,9)
- PROCforce_icon_redraw(options_window%,12)
+ PROCicon_redraw(options_window%,12)
  IF FNis_caret_in_icon(options_window%,12) THEN PROCput_caret_at_end(options_window%,12)
- PROCforce_icon_redraw(options_window%,15)
- PROCforce_icon_redraw(options_window%,20)
- PROCforce_icon_redraw(options_window%,31)
- PROCforce_icon_redraw(options_window%,37)
+ PROCicon_redraw(options_window%,15)
+ PROCicon_redraw(options_window%,20)
+ PROCicon_redraw(options_window%,31)
+ PROCicon_redraw(options_window%,37)
  IF FNis_caret_in_icon(options_window%,37) THEN PROCput_caret_at_end(choices_window%,37)
 ELSE
  PROCwindow_open_centred_at(options_window%,x%,y%)
@@ -1452,7 +1452,7 @@ DEF PROCend_name_edit(save%)
 :
 IF save% THEN
  $FNicon_indirection(stats_window%,name_edit_icon%)=$FNicon_indirection(main_window%,name_edit_icon%)
- IF FNwindow_is_open(stats_window%) THEN PROCforce_icon_redraw(stats_window%,name_edit_icon%)
+ IF FNwindow_is_open(stats_window%) THEN PROCicon_redraw(stats_window%,name_edit_icon%)
 ELSE
  $FNicon_indirection(main_window%,name_edit_icon%)=name_edit_old_contents$
 ENDIF
