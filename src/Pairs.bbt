@@ -269,8 +269,8 @@ CASE window% OF
    WHEN 2 : PROCdisplay_menu(main_menu%,x%,y%)
    WHEN 4
     CASE icon% OF
-     WHEN 2 : IF FNread_opt_config("EditHuman") THEN PROCstart_name_edit(2)
-     WHEN 3 : IF FNread_opt_config("EditComputer") THEN PROCstart_name_edit(3)
+     WHEN 2 : IF PROCconfig_read_boolean("EditHuman") THEN PROCstart_name_edit(2)
+     WHEN 3 : IF PROCconfig_read_boolean("EditComputer") THEN PROCstart_name_edit(3)
      WHEN -1
       !q%=main_window%
       SYS "Wimp_GetWindowState",,q%
@@ -538,24 +538,24 @@ playing_sounds%=playit_available%
 :
 REM Set up the options
 :
-PROCinitialise_config(12,task_name$)
-PROCinit_int_config("Forgetfulness",75)
-PROCinit_str_config("CardSprites","Shapes")
-PROCinit_int_config("BoardX",8)
-PROCinit_int_config("BoardY",8)
-PROCinit_int_config("DifferentCards",16)
-PROCinit_int_config("ViewDelay",2)
-PROCinit_str_config("HumanName",FNmessage_trans("Human"))
-PROCinit_str_config("ComputerName",FNmessage_trans("Computer"))
-PROCinit_opt_config("EditHuman",TRUE)
-PROCinit_opt_config("EditComputer",FALSE)
-PROCinit_int_config("Guttering",8)
-PROCinit_opt_config("UseSound",FALSE)
+PROCconfig_initialise(12,task_name$)
+PROCconfig_init_integer("Forgetfulness",75)
+PROCconfig_init_string("CardSprites","Shapes")
+PROCconfig_init_integer("BoardX",8)
+PROCconfig_init_integer("BoardY",8)
+PROCconfig_init_integer("DifferentCards",16)
+PROCconfig_init_integer("ViewDelay",2)
+PROCconfig_init_string("HumanName",FNmessage_trans("Human"))
+PROCconfig_init_string("ComputerName",FNmessage_trans("Computer"))
+PROCconfig_init_boolean("EditHuman",TRUE)
+PROCconfig_init_boolean("EditComputer",FALSE)
+PROCconfig_init_integer("Guttering",8)
+PROCconfig_init_boolean("UseSound",FALSE)
 :
 choices_load$="Choices:Pairs.Choices"
 SYS "XOS_File",17,choices_load$ TO choices_type% ;flags%
 IF (flags% AND 1)<>0 OR choices_type%<>1 THEN choices_load$="Pairs:Choices"
-choices_save$=FNload_config_file(choices_load$)
+choices_save$=FNconfig_load_file(choices_load$)
 :
 REM Load the window tamplates
 :
@@ -662,28 +662,28 @@ REM ============================================================================
 :
 DEF PROCstart_new_game
 :
-show_card_delay%=FNread_int_config("ViewDelay")
-cards%=FNread_int_config("DifferentCards")
-forgetfulness%=FNread_int_config("Forgetfulness")
-playing_sounds%=FNread_opt_config("UseSound") AND playit_available%
+show_card_delay%=PROCconfig_read_integer("ViewDelay")
+cards%=PROCconfig_read_integer("DifferentCards")
+forgetfulness%=PROCconfig_read_integer("Forgetfulness")
+playing_sounds%=PROCconfig_read_boolean("UseSound") AND playit_available%
 poll_times%()=0,show_card_delay%*50,50,50,50,50,show_card_delay%*50,50,50
 another_turn%=FALSE
-PROCload_card_sprites(card_sprite_file_path$,FNread_str_config("CardSprites"),playing_sounds%)
-$FNicon_indirection(main_window%,2)=FNread_str_config("HumanName")
-$FNicon_indirection(main_window%,3)=FNread_str_config("ComputerName")
-$FNicon_indirection(stats_window%,2)=FNread_str_config("HumanName")
-$FNicon_indirection(stats_window%,3)=FNread_str_config("ComputerName")
+PROCload_card_sprites(card_sprite_file_path$,PROCconfig_read_string("CardSprites"),playing_sounds%)
+$FNicon_indirection(main_window%,2)=PROCconfig_read_string("HumanName")
+$FNicon_indirection(main_window%,3)=PROCconfig_read_string("ComputerName")
+$FNicon_indirection(stats_window%,2)=PROCconfig_read_string("HumanName")
+$FNicon_indirection(stats_window%,3)=PROCconfig_read_string("ComputerName")
 :
 REM Set the window details
 :
-guttering%=FNread_int_config("Guttering")
+guttering%=PROCconfig_read_integer("Guttering")
 :
 SYS "OS_SpriteOp",&128,card_sprite_area%,"null" TO ,,,card_x%,card_y%
 card_x%=(card_x%<<screen_xeig%)+guttering%
 card_y%=(card_y%<<screen_yeig%)+guttering%
 :
-board_x%=FNread_int_config("BoardX")
-board_y%=FNread_int_config("BoardY")
+board_x%=PROCconfig_read_integer("BoardX")
+board_y%=PROCconfig_read_integer("BoardY")
 IF FNodd_number(board_x%*board_y%) THEN
  IF board_x%<20 THEN board_x%+=1 ELSE board_y%+=1
 ENDIF
@@ -1320,29 +1320,29 @@ LOCAL sprites$,loop%,card_sets%
 !q%=options_window%
 q%!4=16
 SYS "Wimp_DeleteIcon",,q%
-options_icon%!12=options_icon%!4+2*FNread_int_config("Forgetfulness")
+options_icon%!12=options_icon%!4+2*PROCconfig_read_integer("Forgetfulness")
 SYS "Wimp_CreateIcon",,options_icon%
 :
-$FNicon_indirection(options_window%,6)=FNread_str_config("HumanName")
-$FNicon_indirection(options_window%,9)=FNread_str_config("ComputerName")
-$FNicon_indirection(options_window%,12)=STR$(FNread_int_config("Forgetfulness"))
-$FNicon_indirection(options_window%,20)=FNread_str_config("CardSprites")
-$FNicon_indirection(options_window%,23)=STR$(FNread_int_config("BoardX"))
-$FNicon_indirection(options_window%,27)=STR$(FNread_int_config("BoardY"))
-$FNicon_indirection(options_window%,31)=STR$(FNread_int_config("DifferentCards"))
-$FNicon_indirection(options_window%,37)=STR$(FNread_int_config("ViewDelay"))
+$FNicon_indirection(options_window%,6)=PROCconfig_read_string("HumanName")
+$FNicon_indirection(options_window%,9)=PROCconfig_read_string("ComputerName")
+$FNicon_indirection(options_window%,12)=STR$(PROCconfig_read_integer("Forgetfulness"))
+$FNicon_indirection(options_window%,20)=PROCconfig_read_string("CardSprites")
+$FNicon_indirection(options_window%,23)=STR$(PROCconfig_read_integer("BoardX"))
+$FNicon_indirection(options_window%,27)=STR$(PROCconfig_read_integer("BoardY"))
+$FNicon_indirection(options_window%,31)=STR$(PROCconfig_read_integer("DifferentCards"))
+$FNicon_indirection(options_window%,37)=STR$(PROCconfig_read_integer("ViewDelay"))
 :
 card_sets%=FNmake_card_sprite_list_and_menu(card_sprite_file_path$)
-sprites$=FNto_upper(FNread_str_config("CardSprites"))
+sprites$=FNto_upper(PROCconfig_read_string("CardSprites"))
 option_card_set%=0
 FOR loop%=0 TO card_sets%-1
  IF FNto_upper(card_sprite_files$(loop%))=sprites$ THEN option_card_set%=loop%
 NEXT loop%
 PROCtick_menu_item(card_menu%,option_card_set%)
 :
-PROCset_icon_selected(options_window%,7,FNread_opt_config("EditHuman"))
-PROCset_icon_selected(options_window%,10,FNread_opt_config("EditComputer"))
-PROCset_icon_state(options_window%,41,FNread_opt_config("UseSound"),NOT playit_available%,FALSE)
+PROCset_icon_selected(options_window%,7,PROCconfig_read_boolean("EditHuman"))
+PROCset_icon_selected(options_window%,10,PROCconfig_read_boolean("EditComputer"))
+PROCset_icon_state(options_window%,41,PROCconfig_read_boolean("UseSound"),NOT playit_available%,FALSE)
 :
 IF FNwindow_is_open(options_window%) THEN
  PROCforce_icon_redraw(options_window%,6)
@@ -1376,18 +1376,18 @@ REM Get the options details from the options window
 :
 LOCAL new_choices%,len%
 :
-PROCset_str_config("HumanName",$FNicon_indirection(options_window%,6))
-PROCset_str_config("ComputerName",$FNicon_indirection(options_window%,9))
-PROCset_int_config("Forgetfulness",VAL($FNicon_indirection(options_window%,12)))
-PROCset_str_config("CardSprites",card_sprite_files$(option_card_set%))
-PROCset_int_config("BoardX",VAL($FNicon_indirection(options_window%,23)))
-PROCset_int_config("BoardY",VAL($FNicon_indirection(options_window%,27)))
-PROCset_int_config("DifferentCards",VAL($FNicon_indirection(options_window%,31)))
-PROCset_int_config("ViewDelay",VAL($FNicon_indirection(options_window%,37)))
+PROCconfig_set_string("HumanName",$FNicon_indirection(options_window%,6))
+PROCconfig_set_string("ComputerName",$FNicon_indirection(options_window%,9))
+PROCconfig_set_integer("Forgetfulness",VAL($FNicon_indirection(options_window%,12)))
+PROCconfig_set_string("CardSprites",card_sprite_files$(option_card_set%))
+PROCconfig_set_integer("BoardX",VAL($FNicon_indirection(options_window%,23)))
+PROCconfig_set_integer("BoardY",VAL($FNicon_indirection(options_window%,27)))
+PROCconfig_set_integer("DifferentCards",VAL($FNicon_indirection(options_window%,31)))
+PROCconfig_set_integer("ViewDelay",VAL($FNicon_indirection(options_window%,37)))
 :
-PROCset_opt_config("EditHuman",FNicon_selected(options_window%,7))
-PROCset_opt_config("EditComputer",FNicon_selected(options_window%,10))
-PROCset_opt_config("UseSound",FNicon_selected(options_window%,41))
+PROCconfig_set_boolean("EditHuman",FNicon_selected(options_window%,7))
+PROCconfig_set_boolean("EditComputer",FNicon_selected(options_window%,10))
+PROCconfig_set_boolean("UseSound",FNicon_selected(options_window%,41))
 :
 IF save% THEN
  IF choices_save$="" THEN
@@ -1404,7 +1404,7 @@ IF save% THEN
   ENDIF
  ENDIF
  :
- PROCsave_config_file(choices_save$)
+ PROCconfig_save_file(choices_save$)
 ENDIF
 ENDPROC
 :
