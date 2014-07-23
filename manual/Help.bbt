@@ -23,46 +23,32 @@ REM See the Licence for the specific language governing
 REM permissions and limitations under the Licence.
 :
 REM Select help file based on available readers and selected territory.
-:
-ON ERROR PRINT REPORT$+" at line "+STR$(ERL) : END
-:
-REM Change this direcrtory as required.
-:
-resource_dir$="<Pairs$Dir>.Resources"
-:
+
+ON ERROR PRINT REPORT$ + " at line " + STR$(ERL) : END
+
+REM Change this direcrtory and the names of the target files and variables as required.
+
+strong_help$ = ""
+text_help$ = "HelpText"
+resource_dir$ = "<Pairs$Dir>.Resources"
+help_text_var$ = "Pairs$HelpText"
+
 DIM b% 255
-:
-resource_path$=resource_dir$+"."+FNterritory_name
-SYS "XOS_File",5,resource_path$ TO type%
-IF type%<2 OR type%>3 THEN resource_path$=resource_dir$+".UK." ELSE resource_path$+="."
-:
-SYS "XOS_SetVarVal","Pairs$HelpText",resource_path$+"HelpText",LEN(resource_path$+"HelpText"),0,0
-:
-OSCLI("%Filer_Run "+resource_path$+"HelpText")
-:
-END
 
-
-
-
-DEF FNterritory_name
-:
-LOCAL territory%
-:
 SYS "Territory_Number" TO territory%
-SYS "Territory_NumberToName",territory%,b%,256
-=FNzero_string(b%)
+SYS "Territory_NumberToName", territory%, b%, 256
+SYS "XOS_GenerateError", b% TO territory_name$
 
+resource_path$ = resource_dir$ + "." + territory_name$
+SYS "XOS_File", 5, resource_path$ TO type%
+IF type% < 2 OR type% > 3 THEN resource_path$ = resource_dir$ + ".UK." ELSE resource_path$ + ="."
 
+SYS "XOS_SetVarVal", help_text_var$, resource_path$ + text_help$, LEN(resource_path$ + text_help$), 0, 0
 
+SYS "XOS_ReadVarVal", "Alias$@RunType_3d6", b%, 256, 0, 0 TO ;flags%
+IF ((flags% AND 1) = 1) OR (strong_help$ = "") THEN file$ = text_help$ ELSE file$ = strong_help$
 
-DEF FNzero_string(string%)
-:
-LOCAL string$
-:
-WHILE ?string%<>0
- string$+=CHR$(?string%)
- string%+=1
-ENDWHILE
-=string$
+OSCLI("%Filer_Run " + resource_path$ + file$)
+
+END
 
