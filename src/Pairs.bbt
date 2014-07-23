@@ -770,8 +770,8 @@ IF wimp_text_op% THEN
  SYS "Wimp_TextOp",1,q%!28,0 TO width1%
  SYS "Wimp_TextOp",1,q%!128,0 TO width2%
 ELSE
-  width1%=LEN(FNctrl_string(q%!28))*16
-  width2%=LEN(FNctrl_string(q%!128))*16
+  width1%=LEN(FNstring_read((q%!28))*16
+  width2%=LEN(FNstring_read((q%!128))*16
 ENDIF
 :
 IF width1%+width2%+6<available_width% AND (width1%+4>(available_width%/2) OR width2%+4>(available_width%/2)) THEN
@@ -1224,7 +1224,7 @@ width%=0
 REPEAT
  SYS "OS_GBPB",10,path$,q%,1,offset%,255,"*" TO ,,,read%,offset%
  IF read%>0 AND q%!16=2 THEN
-  file$=FNzero_string(q%+20)
+  SYS "XOS_GenerateError", q% + 20 TO file$
   card_sprite_files$(files%)=file$
   IF LEN(file$)>width% THEN width%=LEN(file$)
   :
@@ -1333,10 +1333,10 @@ $FNicon_indirection(options_window%,31)=STR$(PROCconfig_read_integer("DifferentC
 $FNicon_indirection(options_window%,37)=STR$(PROCconfig_read_integer("ViewDelay"))
 :
 card_sets%=FNmake_card_sprite_list_and_menu(card_sprite_file_path$)
-sprites$=FNto_upper(PROCconfig_read_string("CardSprites"))
+sprites$=FNstring_to_upper(PROCconfig_read_string("CardSprites"))
 option_card_set%=0
 FOR loop%=0 TO card_sets%-1
- IF FNto_upper(card_sprite_files$(loop%))=sprites$ THEN option_card_set%=loop%
+ IF FNstring_to_upper(card_sprite_files$(loop%))=sprites$ THEN option_card_set%=loop%
 NEXT loop%
 PROCtick_menu_item(card_menu%,option_card_set%)
 :
