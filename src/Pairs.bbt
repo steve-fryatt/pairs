@@ -113,8 +113,8 @@ IF dragging_options_bar% THEN
   $FNicon_indirection(options_window%,12)=STR$((options_icon%!12-options_icon%!4) DIV 2)
   SYS "Wimp_CreateIcon",,options_icon%
   WAIT
-  PROCimmediate_icon_redraw(options_window%,12)
-  PROCimmediate_icon_redraw(options_window%,15)
+  PROCicon_immediate_redraw(options_window%,12)
+  PROCicon_immediate_redraw(options_window%,15)
   mouse_drag_x%=!b%
  ENDIF
   SYS "OS_ReadMonotonicTime" TO newtime%
@@ -627,7 +627,7 @@ turn_count%=0
 reveal%=FALSE
 :
 PROCget_mode_size
-ibar_icon%=FNcreate_standard_bar_icon(-1,task_sprite$)
+ibar_icon%=FNicon_create_standard_bar(-1,task_sprite$)
 ENDPROC
 :
 :
@@ -1342,7 +1342,7 @@ PROCtick_menu_item(card_menu%,option_card_set%)
 :
 PROCicon_set_selected(options_window%,7,PROCconfig_read_boolean("EditHuman"))
 PROCicon_set_selected(options_window%,10,PROCconfig_read_boolean("EditComputer"))
-PROCset_icon_state(options_window%,41,PROCconfig_read_boolean("UseSound"),NOT playit_available%,FALSE)
+PROCicon_set_state(options_window%,41,PROCconfig_read_boolean("UseSound"),NOT playit_available%,FALSE)
 :
 IF FNwindow_is_open(options_window%) THEN
  PROCicon_redraw(options_window%,6)
