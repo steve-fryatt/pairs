@@ -29,6 +29,7 @@ LIBRARY "BASIC:Config"
 LIBRARY "BASIC:Icon"
 LIBRARY "BASIC:Resources"
 LIBRARY "BASIC:String"
+LIBRARY "BASIC:Template"
 LIBRARY "BASIC:Window"
 LIBRARY "BASIC:WimpError"
 LIBRARY "BASIC:WimpSprite"
@@ -562,18 +563,18 @@ REM Load the window tamplates
 indirected_size%=2048
 DIM indirected_data% indirected_size%, options_icon% 35
 :
-PROCopen_templates(resource_path$+"Templates")
-PROCload_template("Main",b%,indirected_data%,indirected_size%,-1)
+PROCtemplate_open(resource_path$+"Templates")
+PROCtemplate_load("Main",b%,indirected_data%,indirected_size%,-1)
 SYS "Wimp_CreateWindow",,b% TO main_window%
-PROCload_template("ProgInfo",b%,indirected_data%,indirected_size%,-1)
+PROCtemplate_load("ProgInfo",b%,indirected_data%,indirected_size%,-1)
 SYS "Wimp_CreateWindow",,b% TO info_window%
-PROCload_template("Stats",b%,indirected_data%,indirected_size%,-1)
+PROCtemplate_load("Stats",b%,indirected_data%,indirected_size%,-1)
 SYS "Wimp_CreateWindow",,b% TO stats_window%
-PROCload_template("Options",b%,indirected_data%,indirected_size%,-1)
+PROCtemplate_load("Options",b%,indirected_data%,indirected_size%,-1)
 PROCcopy_icon_definition(b%,16,options_icon%+4)
 SYS "Wimp_CreateWindow",,b% TO options_window%
 !options_icon%=options_window%
-PROCclose_templates
+PROCtemplate_close
 :
 $FNicon_indirection(info_window%,4)=CHR$(169) + " Stephen Fryatt, 1997-" + MID$(build_date$, 8)
 $FNicon_indirection(info_window%,6)=build_version$+" ("+build_date$+")"
@@ -1346,19 +1347,19 @@ PROCicon_set_state(options_window%,41,PROCconfig_read_boolean("UseSound"),NOT pl
 :
 IF FNwindow_is_open(options_window%) THEN
  PROCicon_redraw(options_window%,6)
- IF FNis_caret_in_icon(options_window%,6) THEN PROCput_caret_at_end(options_window%,6)
+ IF FNicon_test_for_caret(options_window%,6) THEN PROCicon_put_caret_at_end(options_window%,6)
  PROCicon_redraw(options_window%,9)
- IF FNis_caret_in_icon(options_window%,9) THEN PROCput_caret_at_end(options_window%,9)
+ IF FNicon_test_for_caret(options_window%,9) THEN PROCicon_put_caret_at_end(options_window%,9)
  PROCicon_redraw(options_window%,12)
- IF FNis_caret_in_icon(options_window%,12) THEN PROCput_caret_at_end(options_window%,12)
+ IF FNicon_test_for_caret(options_window%,12) THEN PROCicon_put_caret_at_end(options_window%,12)
  PROCicon_redraw(options_window%,15)
  PROCicon_redraw(options_window%,20)
  PROCicon_redraw(options_window%,31)
  PROCicon_redraw(options_window%,37)
- IF FNis_caret_in_icon(options_window%,37) THEN PROCput_caret_at_end(choices_window%,37)
+ IF FNicon_test_for_caret(options_window%,37) THEN PROCicon_put_caret_at_end(choices_window%,37)
 ELSE
  PROCwindow_open_centred_at(options_window%,x%,y%)
- PROCput_caret_at_end(options_window%,6)
+ PROCicon_put_caret_at_end(options_window%,6)
 ENDIF
 ENDPROC
 :
