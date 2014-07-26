@@ -27,6 +27,7 @@ REM Play card matching games
 LIBRARY "BASIC:WimpLib"
 LIBRARY "BASIC:Config"
 LIBRARY "BASIC:Icon"
+LIBRARY "BASIC:Menu"
 LIBRARY "BASIC:Resources"
 LIBRARY "BASIC:String"
 LIBRARY "BASIC:Template"
@@ -247,8 +248,8 @@ IF name_edit_icon%>-1 AND NOT (window%=main_window% AND icon%=name_edit_icon%) T
 CASE window% OF
  WHEN -2
   CASE buttons% OF
-   WHEN 2 : PROCset_menu_state(ibar_menu%,2,FALSE,NOT FNwindow_is_open(main_window%))
-            PROCdisplay_bar_menu(ibar_menu%,5,2,x%)
+   WHEN 2 : PROCmenu_set_state(ibar_menu%,2,FALSE,NOT FNwindow_is_open(main_window%))
+            PROCmenu_create_iconbar(ibar_menu%, x%)
    WHEN 4 : IF FNwindow_is_open(main_window%) THEN
              PROCwindow_open(main_window%)
             ELSE
@@ -267,7 +268,7 @@ CASE window% OF
   ENDCASE
  WHEN main_window%
   CASE buttons% OF
-   WHEN 2 : PROCdisplay_menu(main_menu%,x%,y%)
+   WHEN 2 : PROCmenu_create(main_menu%,x%,y%)
    WHEN 4
     CASE icon% OF
      WHEN 2 : IF PROCconfig_read_boolean("EditHuman") THEN PROCstart_name_edit(2)
@@ -288,7 +289,7 @@ CASE window% OF
              ENDCASE
    WHEN 1 : PROCset_options_details(TRUE) : IF buttons%=4 THEN PROCwindow_close(options_window%)
    WHEN 2 : PROCset_options_details(FALSE) : IF buttons%=4 THEN PROCwindow_close(options_window%)
-   WHEN 21 : PROCdisplay_icon_menu(card_menu%,options_window%,21)
+   WHEN 21 : PROCmenu_create_popup(card_menu%,options_window%,21)
    WHEN 24,25 : val%=VAL($FNicon_indirection(options_window%,23))
                 IF FNodd_number(VAL($FNicon_indirection(options_window%,27))) THEN inc%=2 ELSE inc%=1
                 IF (icon%=24 AND buttons%=1) OR (icon%=25 AND buttons%=4) THEN val%+=inc% ELSE val%-=inc%
@@ -346,7 +347,7 @@ LOCAL reopen%,new_game%
 SYS "Wimp_GetPointerInfo",,q%
 reopen%=(q%!8=1)
 :
-CASE menu_up% OF
+CASE FNmenu_current_handle OF
  WHEN ibar_menu%
   CASE s1% OF
    WHEN 1 : OSCLI("%Filer_Run <Pairs$Dir>.!Help")
@@ -375,7 +376,7 @@ CASE menu_up% OF
   PROCtick_menu_item(card_menu%,option_card_set%)
 ENDCASE
 :
-IF reopen% THEN PROCdisplay_menu(menu_up%,0,0)
+IF reopen% THEN PROCmenu_create(FNmenu_current_handle,0,0)
 ENDPROC
 :
 :
@@ -460,7 +461,7 @@ CASE b%!32 OF
   ENDCASE
  OTHERWISE
   SYS "Wimp_GetMenuState",1,q%,b%!32,b%!36
-  CASE menu_up% OF
+  CASE FNmenu_current_handle OF
    WHEN ibar_menu% : IF !q%>-1 THEN token$="MenuIB"+STR$(!q%)
    WHEN main_menu% : IF !q%>-1 THEN token$="MenuMM"+STR$(!q%)
   ENDCASE
@@ -586,8 +587,9 @@ name_edit_validation$(1)=$FNicon_validation(main_window%,3)
 $FNicon_validation(main_window%,2)=""
 $FNicon_validation(main_window%,3)=""
 :
+PROCmenu_initialise
 !b%=info_window%
-PROCload_menu_block(resource_path$+"Menus",b%)
+PROCmenu_load_templates(resource_path$+"Menus",b%)
 ibar_menu%=!b%
 main_menu%=b%!4
 :
@@ -1602,7 +1604,7 @@ LOCAL loop%
 :
 loop%=0
 REPEAT
- PROCset_menu_state(menu%,loop%,loop%=item%,FALSE)
+ PROCmenu_set_state(menu%,loop%,loop%=item%,FALSE)
  loop%+=1
 UNTIL (menu%!(28+24*(loop%-1)) AND &80)
 ENDPROC
