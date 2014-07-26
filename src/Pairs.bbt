@@ -24,7 +24,6 @@ REM permissions and limitations under the Licence.
 :
 REM Play card matching games
 :
-LIBRARY "BASIC:WimpLib"
 LIBRARY "BASIC:Config"
 LIBRARY "BASIC:Icon"
 LIBRARY "BASIC:Menu"
