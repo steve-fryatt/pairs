@@ -357,7 +357,7 @@ CASE FNmenu_current_handle OF
  WHEN main_menu%
   CASE s1% OF
    WHEN 0 : IF cards_in_play%>0 THEN
-             new_game%=FNwimperror_report(FNmessage_trans("KillGame"),4,%11,"")
+             new_game%=FNwimperror_report(FNmessage_lookup("KillGame"),4,%11,"")
             ELSE
              new_game%=1
             ENDIF
@@ -508,8 +508,8 @@ SYS "MessageTrans_FileInfo",,resource_path$+"Messages" TO flags%,,message_size%
 DIM message_buffer% message_size%
 SYS "MessageTrans_OpenFile",message_block%,resource_path$+"Messages",message_buffer%
 :
-task_name$=FNmessage_trans("TaskName")
-task_sprite$=FNmessage_trans("TaskSpr")
+task_name$=FNmessage_lookup("TaskName")
+task_sprite$=FNmessage_lookup("TaskSpr")
 PROCwimperror_initialise(task_name$,task_sprite$)
 :
 $b%="TASK"
@@ -546,8 +546,8 @@ PROCconfig_init_integer("BoardX",8)
 PROCconfig_init_integer("BoardY",8)
 PROCconfig_init_integer("DifferentCards",16)
 PROCconfig_init_integer("ViewDelay",2)
-PROCconfig_init_string("HumanName",FNmessage_trans("Human"))
-PROCconfig_init_string("ComputerName",FNmessage_trans("Computer"))
+PROCconfig_init_string("HumanName",FNmessage_lookup("Human"))
+PROCconfig_init_string("ComputerName",FNmessage_lookup("Computer"))
 PROCconfig_init_boolean("EditHuman",TRUE)
 PROCconfig_init_boolean("EditComputer",FALSE)
 PROCconfig_init_integer("Guttering",8)
@@ -604,7 +604,7 @@ card_sprite_area%=HIMEM
 SYS "Wimp_SlotSize",-1,-1 TO base_wimp_slot%
 
 IF FNmake_card_sprite_list_and_menu(card_sprite_file_path$)=0 THEN
- PROCwimperror_report(FNmessage_trans("NoSprs"),2,%10,"")
+ PROCwimperror_report(FNmessage_lookup("NoSprs"),2,%10,"")
  quit%=TRUE
  ENDPROC
 ENDIF
@@ -836,7 +836,7 @@ FOR card%=0 TO cards%-1
   board%(x%,y%)=card%
  NEXT copy%
 NEXT card%
-IF error% THEN PROCwimperror_report(FNmessage_trans("BadBoard"),2,%01,"")
+IF error% THEN PROCwimperror_report(FNmessage_lookup("BadBoard"),2,%01,"")
 ENDPROC
 :
 :
@@ -1242,7 +1242,7 @@ UNTIL offset%=-1 OR files%>=max_card_sprite_files%
 REM Now use the names to create a menu containing the sprite files that can be used to
 REM display the cards.
 :
-$card_menu%=FNmessage_trans("CardMenu")
+$card_menu%=FNmessage_lookup("CardMenu")
 card_menu%!12=&00070207
 card_menu%!16=(width%+1)*16
 card_menu%!20=&2C
@@ -1277,7 +1277,7 @@ IF set$<>loaded_card_set$ THEN
  :
  SYS "OS_File",17,path$+"."+set$ TO type%,,,,size%
  IF type%<>1 THEN
-  PROCwimperror_report(FNmessage_trans("SprsNotFound"),2,%10,"")
+  PROCwimperror_report(FNmessage_lookup("SprsNotFound"),2,%10,"")
   set$=card_sprite_files$(0)
   real_set$=set$
   :
@@ -1290,7 +1290,7 @@ IF set$<>loaded_card_set$ THEN
  size%+=4
  :
  SYS "Wimp_SlotSize",base_wimp_slot%+size%,-1 TO new_size%
- IF new_size%<size% THEN PROCwimperror_report(FNmessage_trans("NoSprRoom"),2,%10,"") : ENDPROC
+ IF new_size%<size% THEN PROCwimperror_report(FNmessage_lookup("NoSprRoom"),2,%10,"") : ENDPROC
  :
  !card_sprite_area%=size%
  card_sprite_area%!8=16
@@ -1482,7 +1482,7 @@ REM ============================================================================
 :
 :
 :
-DEF FNmessage_trans(m$)
+DEF FNmessage_lookup(m$)
 LOCAL e$
 IF m$<>"" THEN SYS "MessageTrans_Lookup",message_block%,m$ TO ,,e$
 =e$
