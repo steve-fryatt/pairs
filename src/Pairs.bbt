@@ -270,8 +270,8 @@ CASE window% OF
    WHEN 2 : PROCmenu_create(main_menu%,x%,y%)
    WHEN 4
     CASE icon% OF
-     WHEN 2 : IF PROCconfig_read_boolean("EditHuman") THEN PROCstart_name_edit(2)
-     WHEN 3 : IF PROCconfig_read_boolean("EditComputer") THEN PROCstart_name_edit(3)
+     WHEN 2 : IF FNconfig_read_boolean("EditHuman") THEN PROCstart_name_edit(2)
+     WHEN 3 : IF FNconfig_read_boolean("EditComputer") THEN PROCstart_name_edit(3)
      WHEN -1
       !q%=main_window%
       SYS "Wimp_GetWindowState",,q%
@@ -664,28 +664,28 @@ REM ============================================================================
 :
 DEF PROCstart_new_game
 :
-show_card_delay%=PROCconfig_read_integer("ViewDelay")
-cards%=PROCconfig_read_integer("DifferentCards")
-forgetfulness%=PROCconfig_read_integer("Forgetfulness")
-playing_sounds%=PROCconfig_read_boolean("UseSound") AND playit_available%
+show_card_delay%=FNconfig_read_integer("ViewDelay")
+cards%=FNconfig_read_integer("DifferentCards")
+forgetfulness%=FNconfig_read_integer("Forgetfulness")
+playing_sounds%=FNconfig_read_boolean("UseSound") AND playit_available%
 poll_times%()=0,show_card_delay%*50,50,50,50,50,show_card_delay%*50,50,50
 another_turn%=FALSE
-PROCload_card_sprites(card_sprite_file_path$,PROCconfig_read_string("CardSprites"),playing_sounds%)
-$FNicon_indirection(main_window%,2)=PROCconfig_read_string("HumanName")
-$FNicon_indirection(main_window%,3)=PROCconfig_read_string("ComputerName")
-$FNicon_indirection(stats_window%,2)=PROCconfig_read_string("HumanName")
-$FNicon_indirection(stats_window%,3)=PROCconfig_read_string("ComputerName")
+PROCload_card_sprites(card_sprite_file_path$,FNconfig_read_string("CardSprites"),playing_sounds%)
+$FNicon_indirection(main_window%,2)=FNconfig_read_string("HumanName")
+$FNicon_indirection(main_window%,3)=FNconfig_read_string("ComputerName")
+$FNicon_indirection(stats_window%,2)=FNconfig_read_string("HumanName")
+$FNicon_indirection(stats_window%,3)=FNconfig_read_string("ComputerName")
 :
 REM Set the window details
 :
-guttering%=PROCconfig_read_integer("Guttering")
+guttering%=FNconfig_read_integer("Guttering")
 :
 SYS "OS_SpriteOp",&128,card_sprite_area%,"null" TO ,,,card_x%,card_y%
 card_x%=(card_x%<<screen_xeig%)+guttering%
 card_y%=(card_y%<<screen_yeig%)+guttering%
 :
-board_x%=PROCconfig_read_integer("BoardX")
-board_y%=PROCconfig_read_integer("BoardY")
+board_x%=FNconfig_read_integer("BoardX")
+board_y%=FNconfig_read_integer("BoardY")
 IF FNodd_number(board_x%*board_y%) THEN
  IF board_x%<20 THEN board_x%+=1 ELSE board_y%+=1
 ENDIF
@@ -1322,29 +1322,29 @@ LOCAL sprites$,loop%,card_sets%
 !q%=options_window%
 q%!4=16
 SYS "Wimp_DeleteIcon",,q%
-options_icon%!12=options_icon%!4+2*PROCconfig_read_integer("Forgetfulness")
+options_icon%!12=options_icon%!4+2*FNconfig_read_integer("Forgetfulness")
 SYS "Wimp_CreateIcon",,options_icon%
 :
-$FNicon_indirection(options_window%,6)=PROCconfig_read_string("HumanName")
-$FNicon_indirection(options_window%,9)=PROCconfig_read_string("ComputerName")
-$FNicon_indirection(options_window%,12)=STR$(PROCconfig_read_integer("Forgetfulness"))
-$FNicon_indirection(options_window%,20)=PROCconfig_read_string("CardSprites")
-$FNicon_indirection(options_window%,23)=STR$(PROCconfig_read_integer("BoardX"))
-$FNicon_indirection(options_window%,27)=STR$(PROCconfig_read_integer("BoardY"))
-$FNicon_indirection(options_window%,31)=STR$(PROCconfig_read_integer("DifferentCards"))
-$FNicon_indirection(options_window%,37)=STR$(PROCconfig_read_integer("ViewDelay"))
+$FNicon_indirection(options_window%,6)=FNconfig_read_string("HumanName")
+$FNicon_indirection(options_window%,9)=FNconfig_read_string("ComputerName")
+$FNicon_indirection(options_window%,12)=STR$(FNconfig_read_integer("Forgetfulness"))
+$FNicon_indirection(options_window%,20)=FNconfig_read_string("CardSprites")
+$FNicon_indirection(options_window%,23)=STR$(FNconfig_read_integer("BoardX"))
+$FNicon_indirection(options_window%,27)=STR$(FNconfig_read_integer("BoardY"))
+$FNicon_indirection(options_window%,31)=STR$(FNconfig_read_integer("DifferentCards"))
+$FNicon_indirection(options_window%,37)=STR$(FNconfig_read_integer("ViewDelay"))
 :
 card_sets%=FNmake_card_sprite_list_and_menu(card_sprite_file_path$)
-sprites$=FNstring_to_upper(PROCconfig_read_string("CardSprites"))
+sprites$=FNstring_to_upper(FNconfig_read_string("CardSprites"))
 option_card_set%=0
 FOR loop%=0 TO card_sets%-1
  IF FNstring_to_upper(card_sprite_files$(loop%))=sprites$ THEN option_card_set%=loop%
 NEXT loop%
 PROCtick_menu_item(card_menu%,option_card_set%)
 :
-PROCicon_set_selected(options_window%,7,PROCconfig_read_boolean("EditHuman"))
-PROCicon_set_selected(options_window%,10,PROCconfig_read_boolean("EditComputer"))
-PROCicon_set_state(options_window%,41,PROCconfig_read_boolean("UseSound"),NOT playit_available%,FALSE)
+PROCicon_set_selected(options_window%,7,FNconfig_read_boolean("EditHuman"))
+PROCicon_set_selected(options_window%,10,FNconfig_read_boolean("EditComputer"))
+PROCicon_set_state(options_window%,41,FNconfig_read_boolean("UseSound"),NOT playit_available%,FALSE)
 :
 IF FNwindow_is_open(options_window%) THEN
  PROCicon_redraw(options_window%,6)
