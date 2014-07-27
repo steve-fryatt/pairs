@@ -772,8 +772,8 @@ IF wimp_text_op% THEN
  SYS "Wimp_TextOp",1,q%!28,0 TO width1%
  SYS "Wimp_TextOp",1,q%!128,0 TO width2%
 ELSE
-  width1%=LEN(FNstring_read((q%!28))*16
-  width2%=LEN(FNstring_read((q%!128))*16
+  width1%=LEN(FNstring_read(q%!28))*16
+  width2%=LEN(FNstring_read(q%!128))*16
 ENDIF
 :
 IF width1%+width2%+6<available_width% AND (width1%+4>(available_width%/2) OR width2%+4>(available_width%/2)) THEN
