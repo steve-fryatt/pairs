@@ -30,6 +30,7 @@ LIBRARY "BASIC:Menu"
 LIBRARY "BASIC:Resources"
 LIBRARY "BASIC:String"
 LIBRARY "BASIC:Template"
+LIBRARY "BASIC:Url"
 LIBRARY "BASIC:Window"
 LIBRARY "BASIC:WimpError"
 LIBRARY "BASIC:WimpSprite"
@@ -86,6 +87,7 @@ CASE reason% OF
  WHEN 8     : PROChandle_keypress
  WHEN 9     : PROChandle_menu_selections(!b%,b%!4,b%!8)
  WHEN 17,18 : PROChandle_wimp_message
+ WHEN 19    : IF b%!16 = &4AF80 THEN PROCurl_bounce(b%)
 ENDCASE
 ENDPROC
 :
@@ -325,7 +327,9 @@ CASE window% OF
                 ENDIF
    WHEN 38,39 : PROCicon_bump_value(options_window%,37,(icon%=38 AND buttons%=1) OR (icon%=39 AND buttons%=4),1,99,0)
   ENDCASE
- IF buttons%=64 THEN PROCstart_drag_bar
+  IF buttons%=64 THEN PROCstart_drag_bar
+ WHEN info_window%
+  IF buttons% = 4 AND icon% = 8 THEN PROCurl_launch(FNmessage_lookup("SupportURL")) : PROCmenu_create(-1,0,0)
 ENDCASE
 ENDPROC
 :
@@ -410,6 +414,7 @@ CASE b%!16 OF
  WHEN &502   : PROCsend_interactive_help
  WHEN &400C1 : PROCget_mode_size
  WHEN &4D14B : IF ((b%!20) AND &7)=0 AND next_sound_poll_type%<>0 THEN PROChandle_null_poll_event(next_sound_poll_type%)
+ WHEN &4E383 : PROCurl_bounce(b%)
 ENDCASE
 ENDPROC
 :
@@ -516,7 +521,9 @@ $b%="TASK"
 !q%=&502
 q%!4=&400C1 : REM Message mode change
 q%!8=&4D14B : REM Message PlayIt status change
-q%!12=0
+q%!12=&4E383
+q%!16=&4AF80
+q%!20=0
 SYS "Wimp_Initialise",310,!b%,task_name$,q% TO wimp_version%,task_handle%
 :
 SYS "XOS_SWINumberFromString",,"Wimp_TextOp" TO ;flags%
@@ -1357,7 +1364,7 @@ IF FNwindow_is_open(options_window%) THEN
  PROCicon_redraw(options_window%,20)
  PROCicon_redraw(options_window%,31)
  PROCicon_redraw(options_window%,37)
- IF FNicon_test_for_caret(options_window%,37) THEN PROCicon_put_caret_at_end(choices_window%,37)
+ IF FNicon_test_for_caret(options_window%,37) THEN PROCicon_put_caret_at_end(options_window%,37)
 ELSE
  PROCwindow_open_centred_at(options_window%,x%,y%)
  PROCicon_put_caret_at_end(options_window%,6)
