@@ -517,14 +517,13 @@ task_name$=FNmessage_lookup("TaskName")
 task_sprite$=FNmessage_lookup("TaskSpr")
 PROCwimperror_initialise(task_name$,task_sprite$)
 :
-$b%="TASK"
 !q%=&502
 q%!4=&400C1 : REM Message mode change
 q%!8=&4D14B : REM Message PlayIt status change
 q%!12=&4E383
 q%!16=&4AF80
 q%!20=0
-SYS "Wimp_Initialise",310,!b%,task_name$,q% TO wimp_version%,task_handle%
+SYS "Wimp_Initialise",310,&4B534154,task_name$,q% TO wimp_version%,task_handle%
 :
 SYS "XOS_SWINumberFromString",,"Wimp_TextOp" TO ;flags%
 wimp_text_op%=(flags% AND 1)=0
