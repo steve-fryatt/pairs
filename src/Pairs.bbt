@@ -219,8 +219,8 @@ WHILE more%
     FOR y%= y1% TO y2%
      IF board%(x%,y%)>-1 THEN
       IF state%(x%,y%) OR reveal% THEN sprite_name$=STR$(board%(x%,y%)) ELSE sprite_name$="null"
-      SYS "Wimp_ReadPixTrans",&100,card_sprite_area%,sprite_name$,,,,q%,q%+16
-      SYS "OS_SpriteOp",&134,card_sprite_area%,sprite_name$,ox%+8+x%*card_x%,oy%-(y%+1)*card_y%,&08,q%,q%+16
+      SYS "Wimp_ReadPixTrans",&100,CardSpriteArea%,sprite_name$,,,,q%,q%+16
+      SYS "OS_SpriteOp",&134,CardSpriteArea%,sprite_name$,ox%+8+x%*card_x%,oy%-(y%+1)*card_y%,&08,q%,q%+16
      ENDIF
     NEXT y%
    ENDIF
@@ -290,7 +290,7 @@ CASE window% OF
              ENDCASE
    WHEN 1 : PROCset_options_details(TRUE) : IF buttons%=4 THEN PROCwindow_close(options_window%)
    WHEN 2 : PROCset_options_details(FALSE) : IF buttons%=4 THEN PROCwindow_close(options_window%)
-   WHEN 21 : PROCmenu_create_popup(card_menu%,options_window%,21)
+   WHEN 21 : PROCmenu_create_popup(CardSetMenu%,options_window%,21)
    WHEN 24,25 : val%=VAL($FNicon_indirection(options_window%,23))
                 IF FNodd_number(VAL($FNicon_indirection(options_window%,27))) THEN inc%=2 ELSE inc%=1
                 IF (icon%=24 AND buttons%=1) OR (icon%=25 AND buttons%=4) THEN val%+=inc% ELSE val%-=inc%
@@ -319,7 +319,7 @@ CASE window% OF
                 ENDIF
    WHEN 32,33 : val%=VAL($FNicon_indirection(options_window%,31))
                 inc%=VAL($FNicon_indirection(options_window%,27))*VAL($FNicon_indirection(options_window%,23))/2
-                IF inc%>card_sprites%(option_card_set%) THEN inc%=card_sprites%(option_card_set%)
+                IF inc%>CardSetSprites%(option_card_set%) THEN inc%=CardSetSprites%(option_card_set%)
                 IF (icon%=32 AND buttons%=1) OR (icon%=33 AND buttons%=4) THEN val%+=1 ELSE val%-=1
                 IF val%>=2 AND val%<=inc% THEN
                  $FNicon_indirection(options_window%,31)=STR$(val%)
@@ -368,15 +368,15 @@ CASE FNmenu_current_handle OF
             IF new_game%=1 THEN PROCstart_new_game : PROCwindow_force_redraw(main_window%)
    WHEN 1 : reveal%=NOT reveal% : PROCwindow_force_redraw(main_window%)
   ENDCASE
- WHEN card_menu%
+ WHEN CardSetMenu%
   option_card_set%=s1%
-  $FNicon_indirection(options_window%,20)=card_sprite_files$(option_card_set%)
+  $FNicon_indirection(options_window%,20)=CardSetFolders$(option_card_set%)
   PROCicon_redraw(options_window%,20)
-  IF VAL($FNicon_indirection(options_window%,31))>card_sprites%(option_card_set%) THEN
-   $FNicon_indirection(options_window%,31)=STR$(card_sprites%(option_card_set%))
+  IF VAL($FNicon_indirection(options_window%,31))>CardSetSprites%(option_card_set%) THEN
+   $FNicon_indirection(options_window%,31)=STR$(CardSetSprites%(option_card_set%))
    PROCicon_redraw(options_window%,31)
   ENDIF
-  PROCtick_menu_item(card_menu%,option_card_set%)
+  PROCtick_menu_item(CardSetMenu%,option_card_set%)
 ENDCASE
 :
 IF reopen% THEN PROCmenu_create(FNmenu_current_handle,0,0)
@@ -600,14 +600,14 @@ main_menu%=b%!4
 :
 REM Set up the sprite area and load the default sprites in.
 :
-max_card_sprite_files%=77
-DIM card_sprite_files$(max_card_sprite_files%-1),card_sprites%(max_card_sprite_files%-1)
-DIM card_menu% 28+24*max_card_sprite_files%
+MaxCardSetFolders%=77
+DIM CardSetFolders$(MaxCardSetFolders%-1),CardSetSprites%(MaxCardSetFolders%-1)
+DIM CardSetMenu% 28+24*MaxCardSetFolders%
 card_sprite_file_path$="<Pairs$Dir>.Cards"
 :
-loaded_card_set$=""
-card_sprite_area%=HIMEM
-SYS "Wimp_SlotSize",-1,-1 TO base_wimp_slot%
+LoadedCardSet$=""
+CardSpriteArea%=HIMEM
+SYS "Wimp_SlotSize",-1,-1 TO BaseWimpSlotSize%
 
 IF FNmake_card_sprite_list_and_menu(card_sprite_file_path$)=0 THEN
  PROCwimperror_report(FNmessage_lookup("NoSprs"),2,%10,"")
@@ -686,7 +686,7 @@ REM Set the window details
 :
 guttering%=FNconfig_read_integer("Guttering")
 :
-SYS "OS_SpriteOp",&128,card_sprite_area%,"null" TO ,,,card_x%,card_y%
+SYS "OS_SpriteOp",&128,CardSpriteArea%,"null" TO ,,,card_x%,card_y%
 card_x%=(card_x%<<screen_xeig%)+guttering%
 card_y%=(card_y%<<screen_yeig%)+guttering%
 :
@@ -1029,7 +1029,7 @@ REM Flip a card over on the board.
 state%(x%,y%)=NOT state%(x%,y%)
 PROCforce_card_redraw(x%,y%)
 IF playit_available% AND playing_sounds% AND state%(x%,y%) THEN
- SYS "XPlayIt_Open",card_sprite_file_path$+"."+loaded_card_set$+".Sounds."+STR$(board%(x%,y%)),0 TO ;flags%
+ SYS "XPlayIt_Open",card_sprite_file_path$+"."+LoadedCardSet$+".Sounds."+STR$(board%(x%,y%)),0 TO ;flags%
  IF (flags% AND 1)=0 THEN SYS "PlayIt_Play"
 ENDIF
 ENDPROC
@@ -1210,103 +1210,122 @@ ENDPROC
 :
 REM ====================================================================================================================
 REM Card sprite handling
-REM ====================================================================================================================
-:
-:
-:
+
+
+REM Scan a folder for card set folders, adding any that are found to the list
+REM of known card sets.
+REM
+REM \param path$		The pathname to the folder to scan.
+REM \return			The number of card sets found.
 :
 DEF FNmake_card_sprite_list_and_menu(path$)
-:
-REM Read all the sprite files in the given directory into an array and build a menu to
-REM display the list
-:
-LOCAL files%,width%,offset%,read%,loop%,file$,file%
-:
-REM First scan the directory and fill the array card_sprite_files$() with the names of
-REM any sprite files we find therein.
-:
+LOCAL folders%, width%, offset%, read%, loop%, folder$, file%, type%, filetype%
+
+REM Scan the directory, looking for subdirectories which might contain card
+REM sets. If any are found, check that they contain valid-looking sets of
+REM sprite files, and if they do, add them to the CardSetFolders$() array.
+
 offset%=0
-files%=0
+folders%=0
 width%=0
-:
+
 REPEAT
- SYS "OS_GBPB",10,path$,q%,1,offset%,255,"*" TO ,,,read%,offset%
- IF read%>0 AND q%!16=2 THEN
-  SYS "XOS_GenerateError", q% + 20 TO file$
-  card_sprite_files$(files%)=file$
-  IF LEN(file$)>width% THEN width%=LEN(file$)
-  :
-  file%=OPENIN(path$+"."+file$+".Sprites")
-  SYS "OS_GBPB",3,file%,q%,4,0
-  card_sprites%(files%)=!q%-1
-  CLOSE#file%
-  :
-  files%+=1
- ENDIF
-UNTIL offset%=-1 OR files%>=max_card_sprite_files%
-:
-REM Now use the names to create a menu containing the sprite files that can be used to
-REM display the cards.
-:
-$card_menu%=FNmessage_lookup("CardMenu")
-card_menu%!12=&00070207
-card_menu%!16=(width%+1)*16
-card_menu%!20=&2C
-card_menu%!24=&0
-:
-FOR loop%=0 TO files%-1
- IF loop%=files%-1 THEN card_menu%!(28+loop%*24)=&80 ELSE card_menu%!(28+loop%*24)=&00
- card_menu%!(28+loop%*24+4)=-1
- card_menu%!(28+loop%*24+8)=&07000021
- $(card_menu%+28+loop%*24+12)=LEFT$(card_sprite_files$(loop%),12)
+	SYS "OS_GBPB", 10, path$, q%, 1, offset%, 255, "*" TO ,,,read%, offset%
+
+	REM If a directory was read on this iteration, look inside it.
+
+	IF read% > 0 AND q%!16 = 2 THEN
+		SYS "XOS_GenerateError", q% + 20 TO folder$
+		SYS "OS_File", 23, path$ + "." + folder$ + ".Sprites" TO type%,,,,,,filetype%
+
+		REM There should be a sprute file called "Sprites" in the folder.
+		REM If there isn't, don't bother looking further.
+
+		IF type% = 1 AND filetype% = &FF9 THEN
+			CardSetFolders$(folders%) = folder$
+			IF LEN(folder$) > width% THEN width% = LEN(folder$)
+
+			file% = OPENIN(path$ + "." + folder$ + ".Sprites")
+			IF file% <> 0 THEN
+				SYS "OS_GBPB", 3, file%, q%, 4, 0
+				CardSetSprites%(folders%) = !q% - 1
+				CLOSE#file%
+
+				folders% += 1
+			ENDIF
+		ENDIF
+	ENDIF
+UNTIL offset% = -1 OR folders% >= MaxCardSetFolders%
+
+REM Use the names of any folders that were found inside the card sets folder
+REM to create a menu of card sets for selecting them.
+
+$CardSetMenu% = FNmessage_lookup("CardMenu")
+CardSetMenu%!12 = &00070207
+CardSetMenu%!16 = (width% + 1) * 16
+CardSetMenu%!20 = &2C
+CardSetMenu%!24 = &0
+
+FOR loop% = 0 TO folders% - 1
+	IF loop% = folders% - 1 THEN CardSetMenu%!(28 + loop%*24) = &80 ELSE CardSetMenu%!(28 + loop%*24) = &00
+	CardSetMenu%!(28 + loop%*24 + 4) = -1
+	CardSetMenu%!(28 + loop%*24 + 8) = &07000021
+	$(CardSetMenu% + 28 + loop%*24 + 12) = LEFT$(CardSetFolders$(loop%), 12)
 NEXT loop%
-=files%
-:
-:
-:
-:
-REM --------------------------------------------------------------------------------------------------------------------
-:
-:
-:
+=folders%
+
+
+REM Load a new set of cards.
+REM
+REM \param path$		The pathname to the folder containing card sets.
+REM \param set$			The name (folder) of the set to load.
+REM \param use_sounds$		The desired "use sounds" state: reset to FALSE
+REM				if sounds aren't available for the chosen set.
 :
 DEF PROCload_card_sprites(path$,set$,RETURN use_sounds%)
-:
-LOCAL size%,new_size%,real_set$
-:
-IF set$<>loaded_card_set$ THEN
- real_set$=set$
- :
- set$+=".Sprites"
- SYS "OS_File",17,path$+"."+set$+FNwimpsprite_file_suffix TO type%
- IF type%=1 THEN set$+=FNwimpsprite_file_suffix
- :
- SYS "OS_File",17,path$+"."+set$ TO type%,,,,size%
- IF type%<>1 THEN
-  PROCwimperror_report(FNmessage_lookup("SprsNotFound"),2,%10,"")
-  set$=card_sprite_files$(0)
-  real_set$=set$
-  :
-  set$+=".Sprites"
-  SYS "OS_File",17,path$+"."+set$+FNwimpsprite_file_suffix TO type%
-  IF type%=1 THEN set$+=FNwimpsprite_file_suffix
-  :
-  SYS "OS_File",17,path$+"."+set$ TO type%,,,,size%
- ENDIF
- size%+=4
- :
- SYS "Wimp_SlotSize",base_wimp_slot%+size%,-1 TO new_size%
- IF new_size%<size% THEN PROCwimperror_report(FNmessage_lookup("NoSprRoom"),2,%10,"") : ENDPROC
- :
- !card_sprite_area%=size%
- card_sprite_area%!8=16
- SYS "OS_SpriteOp",&10A,card_sprite_area%,path$+"."+set$
- :
- loaded_card_set$=real_set$
- :
- SYS "OS_File",17,path$+"."+real_set$+".Sounds" TO type%
- use_sounds%=use_sounds% AND (type%=2)
+LOCAL size%, new_size%, real_set$
+
+REM If this set is already loaded, there's nothing to do.
+
+IF set$ = LoadedCardSet$ THEN ENDPROC
+
+real_set$ = set$
+
+REM Try to find the required Sprites file.
+
+set$ += ".Sprites"
+SYS "OS_File", 17, path$ + "." + set$ + FNwimpsprite_file_suffix TO type%
+IF type% = 1 THEN set$ += FNwimpsprite_file_suffix
+
+SYS "OS_File", 17, path$ + "." + set$ TO type%,,,,size%
+
+IF type% <> 1 THEN
+	PROCwimperror_report(FNmessage_lookup("SprsNotFound"), 2, %10, "")
+	set$ = CardSetFolders$(0)
+	real_set$ = set$
+
+	set$ += ".Sprites"
+	SYS "OS_File", 17, path$ + "." + set$ + FNwimpsprite_file_suffix TO type%
+	IF type% = 1 THEN set$ += FNwimpsprite_file_suffix
+
+	SYS "OS_File", 17, path$ + "." + set$ TO type%,,,,size%
 ENDIF
+size% += 4
+
+SYS "Wimp_SlotSize", BaseWimpSlotSize% + size%, -1 TO new_size%
+IF new_size% < size% THEN
+	PROCwimperror_report(FNmessage_lookup("NoSprRoom"), 2, %10, "")
+	ENDPROC
+ENDIF
+
+!CardSpriteArea% = size%
+CardSpriteArea%!8 = 16
+SYS "OS_SpriteOp", &10A, CardSpriteArea%, path$ + "." + set$
+
+LoadedCardSet$ = real_set$
+
+SYS "OS_File", 17, path$ + "." + real_set$ + ".Sounds" TO type%
+use_sounds% = use_sounds% AND (type% = 2)
 ENDPROC
 :
 :
@@ -1344,9 +1363,9 @@ card_sets%=FNmake_card_sprite_list_and_menu(card_sprite_file_path$)
 sprites$=FNstring_to_upper(FNconfig_read_string("CardSprites"))
 option_card_set%=0
 FOR loop%=0 TO card_sets%-1
- IF FNstring_to_upper(card_sprite_files$(loop%))=sprites$ THEN option_card_set%=loop%
+ IF FNstring_to_upper(CardSetFolders$(loop%))=sprites$ THEN option_card_set%=loop%
 NEXT loop%
-PROCtick_menu_item(card_menu%,option_card_set%)
+PROCtick_menu_item(CardSetMenu%,option_card_set%)
 :
 PROCicon_set_selected(options_window%,7,FNconfig_read_boolean("EditHuman"))
 PROCicon_set_selected(options_window%,10,FNconfig_read_boolean("EditComputer"))
@@ -1387,7 +1406,7 @@ LOCAL new_choices%,len%
 PROCconfig_set_string("HumanName",$FNicon_indirection(options_window%,6))
 PROCconfig_set_string("ComputerName",$FNicon_indirection(options_window%,9))
 PROCconfig_set_integer("Forgetfulness",VAL($FNicon_indirection(options_window%,12)))
-PROCconfig_set_string("CardSprites",card_sprite_files$(option_card_set%))
+PROCconfig_set_string("CardSprites",CardSetFolders$(option_card_set%))
 PROCconfig_set_integer("BoardX",VAL($FNicon_indirection(options_window%,23)))
 PROCconfig_set_integer("BoardY",VAL($FNicon_indirection(options_window%,27)))
 PROCconfig_set_integer("DifferentCards",VAL($FNicon_indirection(options_window%,31)))

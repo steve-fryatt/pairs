@@ -212,6 +212,8 @@ Development release for testing and feedback.
 <list>
 <li>Build system revised and license updated to EUPL.
 <li>Added <menu>Help</menu> entry in iconbar menu.
+<li>Added <icon>Website</icon> button to <window>program information</window> window.
+<li>Test for presence of Sprite files in card folders before loading, to avoid crashing if the folders are not card sets. (Ticket #483)
 </list>
 
 
