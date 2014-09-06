@@ -207,8 +207,6 @@ Limited distribution release.
 
 <subhead title="0.35 (6 September 2014)">
 
-Development release for testing and feedback.
-
 <list>
 <li>Build system revised and license updated to EUPL.
 <li>Added <menu>Help</menu> entry in iconbar menu.
