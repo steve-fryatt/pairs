@@ -214,6 +214,7 @@ Development release for testing and feedback.
 <li>Added <menu>Help</menu> entry in iconbar menu.
 <li>Added <icon>Website</icon> button to <window>program information</window> window.
 <li>Test for presence of Sprite files in card folders before loading, to avoid crashing if the folders are not card sets. (Ticket #483)
+<li>Correctly set the sounds option when starting games, to prevent an apparent hang if sounds are not available. (Ticket #188)
 </list>
 
 

@@ -1282,12 +1282,18 @@ REM \param set$			The name (folder) of the set to load.
 REM \param use_sounds$		The desired "use sounds" state: reset to FALSE
 REM				if sounds aren't available for the chosen set.
 :
-DEF PROCload_card_sprites(path$,set$,RETURN use_sounds%)
+DEF PROCload_card_sprites(path$, set$, RETURN use_sounds%)
 LOCAL size%, new_size%, real_set$
 
-REM If this set is already loaded, there's nothing to do.
+REM If this set is already loaded, there's nothing to do beyond setting the
+REM sound availability.
 
-IF set$ = LoadedCardSet$ THEN ENDPROC
+IF set$ = LoadedCardSet$ THEN
+	SYS "OS_File", 17, path$ + "." + set$ + ".Sounds" TO type%
+	use_sounds% = use_sounds% AND (type% = 2)
+
+	ENDPROC
+ENDIF
 
 real_set$ = set$
 
