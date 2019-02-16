@@ -84,7 +84,8 @@ HelpST3:\Ttotal number of turns taken since the start of the game.
 
 MenuMM0:\Sstart a new game.
 
-MenuIB0:\Rsee information about Pairs.|M\Sread the online help.
-MenuIB1:\Ssee statistics about the current game.
-MenuIB2:\Schange the Pairs game options.
-MenuIB3:\Squit Pairs.
+MenuIB0:\Rsee information about Pairs.
+MenuIB1:\Sread the online documentation for Pairs.
+MenuIB2:\Ssee statistics about the current game.
+MenuIB3:\Schange the Pairs game options.
+MenuIB4:\Squit Pairs.
