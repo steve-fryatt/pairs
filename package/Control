@@ -1,0 +1,18 @@
+Package: Pairs
+Version: 0.36-1
+Section: Games
+Priority: Optional
+Maintainer: Stephen Fryatt <info@stevefryatt.org.uk>
+Standards-Version: 0.6.0
+Environment: any
+Licence: Free
+Description: Memorise cards against the computer
+ Pairs is a Desktop memory game. The playing area is covered in pairs of
+ picture cards, placed face down. Each player takes it in turns to flip over
+ two cards; trying to memorise and keep matching pairs. Pairs contains a
+ variable strength computer opponent and allows you to define your own sets of
+ playing cards (supporting low and high resolution modes). Using Rick Hudson's
+ FreeWare PlayIt module (now maintained by Chris Martin), sounds can be
+ attached to cards when they are turned over.
+Homepage: http://www.stevefryatt.org.uk/software/games/
+Components: Apps.Games.!Pairs (Movable)
