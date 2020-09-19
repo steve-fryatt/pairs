@@ -494,6 +494,7 @@ REM ============================================================================
 :
 :
 DEF PROCinitialise
+LOCAL resources$
 :
 REM Initialise the program
 :
@@ -506,12 +507,19 @@ poll_mask%=&1831
 quit%=FALSE
 dragging_options_bar%=FALSE
 :
-resource_path$=FNresources_find_territory_folder("<Pairs$Dir>.Resources")
+REM Locate the application resources.
+:
+PROCresources_initialise_paths("<Pairs$Dir>.Resources", "UK", "Pairs$Language")
+:
+REM Load the messages file.
+:
+resources$ = FNresources_find_file("Messages", &FFF)
+IF resources$ = "" THEN ERROR 255, "Unable to find Messages file"
 :
 DIM message_block% 16
-SYS "MessageTrans_FileInfo",,resource_path$+"Messages" TO flags%,,message_size%
+SYS "MessageTrans_FileInfo",,resources$ TO flags%,,message_size%
 DIM message_buffer% message_size%
-SYS "MessageTrans_OpenFile",message_block%,resource_path$+"Messages",message_buffer%
+SYS "MessageTrans_OpenFile",message_block%,resources$,message_buffer%
 :
 task_name$=FNmessage_lookup("TaskName")
 task_sprite$=FNmessage_lookup("TaskSpr")
@@ -566,10 +574,13 @@ choices_save$=FNconfig_load_file(choices_load$)
 :
 REM Load the window tamplates
 :
+resources$ = FNresources_find_file("Templates", &FEC)
+IF resources$ = "" THEN ERROR 255, "Unable to find Templates file"
+:
 indirected_size%=2048
 DIM indirected_data% indirected_size%, options_icon% 35
 :
-PROCtemplate_open(resource_path$+"Templates")
+PROCtemplate_open(resources$)
 PROCtemplate_load("Main",b%,indirected_data%,indirected_size%,-1)
 SYS "Wimp_CreateWindow",,b% TO main_window%
 PROCtemplate_load("ProgInfo",b%,indirected_data%,indirected_size%,-1)
@@ -592,9 +603,14 @@ name_edit_validation$(1)=$FNicon_validation(main_window%,3)
 $FNicon_validation(main_window%,2)=""
 $FNicon_validation(main_window%,3)=""
 :
+REM Initialise and load the menu templates.
+:
+resources$ = FNresources_find_file("Menus", &FFD)
+IF resources$ = "" THEN ERROR 255, "Unable to find Menus file"
+:
 PROCmenu_initialise
 !b%=info_window%
-PROCmenu_load_templates(resource_path$+"Menus",b%)
+PROCmenu_load_templates(resources$,b%)
 ibar_menu%=!b%
 main_menu%=b%!4
 :
